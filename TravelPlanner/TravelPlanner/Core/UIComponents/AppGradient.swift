@@ -15,5 +15,8 @@ struct AppGradient: View {
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
+        VStack (spacing: 30) {
+            
+        }
     }
 }

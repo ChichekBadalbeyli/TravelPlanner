@@ -1,0 +1,29 @@
+//
+//  File.swift
+//  TravelPlanner
+//
+//  Created by Chichak Badalbayli on 2/22/26.
+//
+
+import SwiftUI
+
+struct AppSearchField: View {
+
+    var placeholder: String
+    @Binding var text: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+
+            TextField(placeholder, text: $text)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+        }
+        .padding()
+        .background(Color.white)
+        .cornerRadius(14)
+        .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
+    }
+}
