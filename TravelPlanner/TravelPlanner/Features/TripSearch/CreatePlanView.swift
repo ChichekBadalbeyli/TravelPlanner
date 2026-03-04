@@ -22,7 +22,7 @@ struct CreatePlanView: View {
                             .foregroundColor(.black)
                         VStack(spacing: 20) {
                             AppSearchField(
-                                placeholder: "Search city or country",
+                                placeholder: "Search city",
                                 text: $viewModel.city
                             )
                             AppDateRow(
@@ -41,6 +41,13 @@ struct CreatePlanView: View {
                 .padding(.horizontal)
                 .sheet(isPresented: $viewModel.isDatePickerPresented) {
                     datePickerSheet
+                }
+                .navigationDestination(isPresented: $viewModel.navigateNext) {
+                    CityView(
+                        city: viewModel.city,
+                        startDate: viewModel.startDate,
+                        endDate: viewModel.endDate
+                    )
                 }
             }
         }
