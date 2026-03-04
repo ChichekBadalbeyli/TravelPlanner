@@ -28,6 +28,7 @@ struct Place: Identifiable, Decodable {
         case lon
         case rating
     }
+    init(id: String, name: String, lat: Double, lon: Double, rating: Double?) {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

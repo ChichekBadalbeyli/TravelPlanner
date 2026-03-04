@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import SwiftData
 import Firebase
+import SwiftData
 
 @main
 struct TravelPlannerApp: App {
@@ -23,5 +23,6 @@ struct TravelPlannerApp: App {
                 RootView()
                     .environmentObject(appState)
             }
+        .modelContainer(for: [TripEntity.self])
     }
 }

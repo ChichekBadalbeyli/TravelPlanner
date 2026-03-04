@@ -53,7 +53,13 @@ struct CityView: View {
         }
         .navigationDestination(isPresented: $viewModel.navigateToPlan) {
             if let plan = viewModel.generatedPlan {
-                PlanView(plan: plan)
+                TripPlanView(
+                    isSavedTrip: false,
+                    city: city,
+                    startDate: startDate,
+                    endDate: endDate,
+                    plan: plan
+                )
             }
         }
     }
