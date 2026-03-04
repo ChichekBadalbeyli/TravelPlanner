@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Place: Identifiable, Decodable {
+struct Place: Identifiable, Codable {
     
     let id: String
     let name: String
@@ -28,7 +28,14 @@ struct Place: Identifiable, Decodable {
         case lon
         case rating
     }
+
     init(id: String, name: String, lat: Double, lon: Double, rating: Double?) {
+        self.id = id
+        self.name = name
+        self.lat = lat
+        self.lon = lon
+        self.rating = rating
+    }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -42,5 +49,20 @@ struct Place: Identifiable, Decodable {
         lat = try properties.decode(Double.self, forKey: .lat)
         lon = try properties.decode(Double.self, forKey: .lon)
         rating = try? properties.decode(Double.self, forKey: .rating)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        var properties = container.nestedContainer(
+            keyedBy: PropertiesKeys.self,
+            forKey: .properties
+        )
+
+        try properties.encode(id, forKey: .place_id)
+        try properties.encode(name, forKey: .name)
+        try properties.encode(lat, forKey: .lat)
+        try properties.encode(lon, forKey: .lon)
+        try properties.encodeIfPresent(rating, forKey: .rating)
     }
 }
