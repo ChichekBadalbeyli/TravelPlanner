@@ -10,6 +10,9 @@ import Foundation
 enum GeoapifyEndpoints {
     case places(latitude: Double, longitude: Double)
     case placeDetails(id: String)
+    private var apiKey: String {
+        AppConfig.geoapifyApiKey
+    }
 }
 
 extension GeoapifyEndpoints: Endpoint {
@@ -39,12 +42,12 @@ extension GeoapifyEndpoints: Endpoint {
                 .init(name: "categories", value: "tourism.sights"),
                 .init(name: "filter", value: "circle:\(lon),\(lat),5000"),
                 .init(name: "limit", value: "20"),
-                .init(name: "apiKey", value: "a1da6cb6347b40b5bbbc250de36b961d")
+                .init(name: "apiKey", value: apiKey)
             ]
         case .placeDetails(let id):
             return [
                 .init(name: "id", value: id),
-                .init(name: "apiKey", value: "a1da6cb6347b40b5bbbc250de36b961d")
+                .init(name: "apiKey", value: apiKey)
             ]
         }
     }

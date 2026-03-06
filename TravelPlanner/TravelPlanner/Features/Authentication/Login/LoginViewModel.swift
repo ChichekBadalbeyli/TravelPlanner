@@ -29,5 +29,4 @@ final class LoginViewModel: ObservableObject {
             errorMessage = error.localizedDescription
         }
     }
-    
 }
