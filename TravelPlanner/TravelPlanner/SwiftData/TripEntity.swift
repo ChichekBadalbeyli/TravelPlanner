@@ -10,17 +10,25 @@ import Foundation
 
 @Model
 class TripEntity {
+
     var city: String
     var startDate: Date
     var endDate: Date
-    var places: [String]
     var userId: String
+    
+    var planData: Data
 
-    init(city: String, startDate: Date, endDate: Date, places: [String], userId: String) {
+    init(
+        city: String,
+        startDate: Date,
+        endDate: Date,
+        userId: String,
+        planData: Data
+    ) {
         self.city = city
         self.startDate = startDate
         self.endDate = endDate
-        self.places = places
         self.userId = userId
+        self.planData = planData
     }
 }

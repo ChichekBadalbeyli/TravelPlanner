@@ -131,29 +131,20 @@ final class CityViewModel: ObservableObject {
     // MARK: - Plan
     
     func generatePlan(startDate: Date, endDate: Date) {
-        
         var remaining = places.filter { $0.isAdded }
         guard !remaining.isEmpty else { return }
-        
-        let daysCount = Calendar.current.dateComponents(
-            [.day],
-            from: startDate,
-            to: endDate
-        ).day! + 1
-        
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: startDate)
+        let end = calendar.startOfDay(for: endDate)
+        let daysCount = (calendar.dateComponents([.day], from: start, to: end).day ?? 0) + 1
         let maxPerDay = max(1, remaining.count / daysCount)
-        
         var days: [TripDay] = []
-        
         for i in 0..<daysCount {
-            
             guard !remaining.isEmpty else { break }
-            
             let date = Calendar.current.date(byAdding: .day, value: i, to: startDate)!
             var dayPlaces: [Place] = []
             var current = remaining.removeFirst()
             dayPlaces.append(current)
-            
             while dayPlaces.count < maxPerDay && !remaining.isEmpty {
                 let nearest = remaining.min {
                     distance(from: current, to: $0) <

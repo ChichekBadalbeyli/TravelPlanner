@@ -63,25 +63,24 @@ struct TripPlanView: View {
             return
         }
 
-        let allPlaces = plan.days
-            .flatMap { $0.places }
-            .map { $0.name }
-
-        let trip = TripEntity(
-            city: city,
-            startDate: startDate,
-            endDate: endDate,
-            places: allPlaces,
-            userId: uid
-        )
-
-        context.insert(trip)
-
         do {
+            let data = try JSONEncoder().encode(plan)
+
+            let trip = TripEntity(
+                city: city,
+                startDate: startDate,
+                endDate: endDate,
+                userId: uid,
+                planData: data
+            )
+
+            context.insert(trip)
             try context.save()
+
             print("Trip saved")
+
         } catch {
-            print(error)
+            print("Save error:", error)
         }
     }
 }

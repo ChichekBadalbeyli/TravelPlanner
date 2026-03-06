@@ -38,12 +38,21 @@ struct MyTripsView: View {
                     city: trip.city,
                     startDate: trip.startDate,
                     endDate: trip.endDate,
-                    plan: makePlan(from: trip)
+                    plan: decodePlan(from: trip)
                 )
-                .presentationDetents([ .large])
+            }
+            .presentationDetents([ .large])
             }
         }
+    
+
+private func decodePlan(from trip: TripEntity) -> TripPlan {
+    do {
+        return try JSONDecoder().decode(TripPlan.self, from: trip.planData)
+    } catch {
+        return TripPlan(days: [])
     }
+}
     
     private var emptyState: some View {
         VStack(spacing: 16) {
@@ -61,26 +70,22 @@ struct MyTripsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    private func makePlan(from trip: TripEntity) -> TripPlan {
-        let calendar = Calendar.current
-        var currentDate = trip.startDate
-        let days = trip.places.map { placeName -> TripDay in
-            let place = Place(
-                id: UUID().uuidString,
-                name: placeName,
-                lat: 0,
-                lon: 0,
-                rating: 0,
-            )
-            let day = TripDay(
-                date: currentDate,
-                places: [place]
-            )
-            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-            return day
-        }
-        return TripPlan(days: days)
-    }
+//    private func makePlan(from trip: TripEntity) -> TripPlan {
+//        let places = trip.places.map { placeName in
+//            Place(
+//                id: UUID().uuidString,
+//                name: placeName,
+//                lat: 0,
+//                lon: 0,
+//                rating: 0
+//            )
+//        }
+//        let day = TripDay(
+//            date: trip.startDate,
+//            places: places
+//        )
+//        return TripPlan(days: [day])
+//    }
     
     private var trips: [TripEntity] {
         guard let uid = Auth.auth().currentUser?.uid else { return [] }
@@ -113,7 +118,7 @@ struct MyTripsView: View {
             Text(dateRange(trip))
                 .font(.subheadline)
                 .foregroundColor(.gray)
-            Text("\(trip.places.count) places")
+          //  Text("\(trip.places.count) places")
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
