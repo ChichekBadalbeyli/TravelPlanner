@@ -13,6 +13,7 @@ import FirebaseAuth
 struct TripPlanView: View {
     
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     let isSavedTrip: Bool
     let city: String
     let startDate: Date
@@ -57,15 +58,11 @@ struct TripPlanView: View {
     }
     
     private func saveTrip() {
-
         guard let uid = Auth.auth().currentUser?.uid else {
-            print("No user logged in")
             return
         }
-
         do {
             let data = try JSONEncoder().encode(plan)
-
             let trip = TripEntity(
                 city: city,
                 startDate: startDate,
@@ -73,14 +70,11 @@ struct TripPlanView: View {
                 userId: uid,
                 planData: data
             )
-
             context.insert(trip)
             try context.save()
-
-            print("Trip saved")
-
+            dismiss() 
         } catch {
-            print("Save error:", error)
+            print(error)
         }
     }
 }

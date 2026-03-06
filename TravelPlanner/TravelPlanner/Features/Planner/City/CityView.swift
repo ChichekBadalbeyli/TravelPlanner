@@ -27,9 +27,12 @@ struct CityView: View {
                         .foregroundColor(.gray)
                     weatherSection
                     attractionsSection
-                    createPlanButton
                 }
                 .padding()
+            }
+            .safeAreaInset(edge: .bottom) {
+                createPlanButton
+                    .padding()
             }
         }
         .navigationTitle(city)
