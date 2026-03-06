@@ -26,7 +26,9 @@ struct ProfileView: View {
     }
     
     private var tripsCount: String {
-        "\(trips.count)"
+        guard let uid = Auth.auth().currentUser?.uid else { return "0" }
+        let userTrips = trips.filter { $0.userId == uid }
+        return "\(userTrips.count)"
     }
     
     private var profileHeader: some View {

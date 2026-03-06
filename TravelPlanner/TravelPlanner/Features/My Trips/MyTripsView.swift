@@ -21,31 +21,50 @@ struct MyTripsView: View {
     
     var body: some View {
         NavigationStack {
-            tripsList
-                .navigationTitle("My Trips")
-                .alert(isPresented: $showDeleteAlert) {
-                    deleteAlert()
+            Group {
+                if trips.isEmpty {
+                    emptyState
+                } else {
+                    tripsList
                 }
-                .sheet(item: $selectedTrip) { trip in
-                    TripPlanView(
-                        isSavedTrip: true,
-                        city: trip.city,
-                        startDate: trip.startDate,
-                        endDate: trip.endDate,
-                        plan: makePlan(from: trip)
-                    )
-                    .presentationDetents([ .large])
-                }
+            }
+            .navigationTitle("My Trips")
+            .alert(isPresented: $showDeleteAlert) {
+                deleteAlert()
+            }
+            .sheet(item: $selectedTrip) { trip in
+                TripPlanView(
+                    isSavedTrip: true,
+                    city: trip.city,
+                    startDate: trip.startDate,
+                    endDate: trip.endDate,
+                    plan: makePlan(from: trip)
+                )
+                .presentationDetents([ .large])
+            }
         }
     }
     
+    private var emptyState: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "airplane")
+                .font(.system(size: 50))
+                .foregroundColor(.gray)
+            
+            Text("No trips yet")
+                .font(.headline)
+            
+            Text("Start planning your first trip!")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
     private func makePlan(from trip: TripEntity) -> TripPlan {
-        
         let calendar = Calendar.current
         var currentDate = trip.startDate
-        
         let days = trip.places.map { placeName -> TripDay in
-            
             let place = Place(
                 id: UUID().uuidString,
                 name: placeName,
@@ -53,16 +72,13 @@ struct MyTripsView: View {
                 lon: 0,
                 rating: 0,
             )
-            
             let day = TripDay(
                 date: currentDate,
                 places: [place]
             )
-            
             currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
             return day
         }
-        
         return TripPlan(days: days)
     }
     
