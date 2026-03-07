@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TripPlan: Identifiable, Codable {
+struct TripPlan: Identifiable, Codable, Equatable,Hashable {
     let id: UUID
     let days: [TripDay]
 
@@ -17,7 +17,7 @@ struct TripPlan: Identifiable, Codable {
     }
 }
 
-struct TripDay: Identifiable, Codable {
+struct TripDay: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     let date: Date
     let places: [Place]

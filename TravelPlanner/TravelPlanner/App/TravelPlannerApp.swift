@@ -23,6 +23,7 @@ struct TravelPlannerApp: App {
         WindowGroup {
                 RootView()
                     .environmentObject(appState)
+                    .environment(\.appDependencies, .live)
             }
         .modelContainer(for: [TripEntity.self])
     }

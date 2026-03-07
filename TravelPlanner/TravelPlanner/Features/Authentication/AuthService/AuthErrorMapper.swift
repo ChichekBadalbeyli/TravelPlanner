@@ -15,7 +15,7 @@ enum AuthErrorMapper {
       if let authError = error as? AuthServiceError {
           switch authError {
           case .firebaseNotConfigured:
-              return "Firebase is not configured. Add GoogleService-Info.plist and rebuild."
+              return L10n.Validation.firebaseNotConfigured
           }
       }
 
@@ -23,34 +23,32 @@ enum AuthErrorMapper {
 
         let name = underlying.userInfo["FIRAuthErrorNameKey"] as? String
         if name == "ERROR_INVALID_EMAIL" {
-            return "Please enter a valid email address."
+            return L10n.Validation.invalidEmail
         }
-      
         if underlying.domain == "FIRAuthErrorDomain", underlying.code == 17008 {
-            return "Please enter a valid email address."
+            return L10n.Validation.invalidEmail
         }
 
         if name == "ERROR_EMAIL_ALREADY_IN_USE" {
-            return "This email is already registered."
+            return L10n.Validation.emailAlreadyInUse
         }
         if name == "ERROR_WEAK_PASSWORD" {
-            return "Password must be at least 6 characters."
+            return L10n.Validation.passwordLength
         }
-      
         if underlying.domain == "FIRAuthErrorDomain" {
             switch underlying.code {
             case 17007:
-                return "This email is already registered."
+                return L10n.Validation.emailAlreadyInUse
             case 17026:
-                return "Password must be at least 6 characters."
+                return L10n.Validation.passwordLength
             case 17005:
-                return "This account has been disabled."
+                return L10n.Validation.accountDisabled
             case 17010:
-                return "Too many attempts. Try again later."
+                return L10n.Validation.tooManyAttempts
             default:
                 break
             }
         }
-        return "Invalid email or password."
+        return L10n.Validation.invalidCredentials
     }
 }

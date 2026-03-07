@@ -12,14 +12,13 @@ import Combine
 @MainActor
 final class PlaceDetailViewModel: ObservableObject {
     
-    @Published var details: PlaceDetails?
-    @Published var isLoading = false
+    @Published private(set) var loadState: Loadable<PlaceDetails> = .idle
     @Published var errorMessage: String?
     
-    private let network: NetworkService
+    private let fetchPlaceDetailsUseCase: FetchPlaceDetailsUseCase
     
-    init(network: NetworkService = DefaultNetworkService()) {
-        self.network = network
+    init(fetchPlaceDetailsUseCase: FetchPlaceDetailsUseCase) {
+        self.fetchPlaceDetailsUseCase = fetchPlaceDetailsUseCase
     }
     
     func loadDetails(for id: String) {
@@ -29,20 +28,19 @@ final class PlaceDetailViewModel: ObservableObject {
     }
     
     private func fetchDetails(id: String) async {
-        isLoading = true
-        defer { isLoading = false }
+        loadState = .loading
         do {
-            let response: PlaceDetailsResponse =
-                try await network.request(
-                    GeoapifyEndpoints.placeDetails(id: id)
-                )
-            details = response.features.first?.properties
+            loadState = .loaded(try await fetchPlaceDetailsUseCase.execute(id: id))
         } catch {
+            loadState = .failed(error)
             if let localized = (error as? LocalizedError)?.errorDescription {
                 errorMessage = localized
             } else {
-                errorMessage = "Failed to load place details."
+                errorMessage = L10n.PlaceDetails.loadError
             }
         }
     }
+
+    var details: PlaceDetails? { loadState.value }
+    var isLoading: Bool { loadState.isLoading }
 }

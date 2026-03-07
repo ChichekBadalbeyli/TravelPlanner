@@ -9,8 +9,14 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @StateObject private var viewModel = LoginViewModel()
+    @StateObject private var viewModel: LoginViewModel
+    private let registrationViewModel: RegistrationViewModel
     @EnvironmentObject var appState: AppState
+
+    init(viewModel: LoginViewModel, registrationViewModel: RegistrationViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        self.registrationViewModel = registrationViewModel
+    }
     
     var body: some View {
         ZStack {
@@ -33,11 +39,11 @@ struct LoginView: View {
     var headImage: some View {
         VStack(spacing: 40) {
             VStack(spacing: 12) {
-                Image(systemName: "airplane")
+                Image(systemName: L10n.Icon.airplane)
                     .font(.system(size: 50))
                     .foregroundColor(.black)
                 
-                Text("TravelPlanner")
+                Text(L10n.App.name)
                     .font(.largeTitle.bold())
                     .foregroundColor(.black)
             }
@@ -47,19 +53,19 @@ struct LoginView: View {
     var loginTextField: some View {
         VStack {
             AppTextField(
-                placeholder: "Email",
+                placeholder: L10n.Auth.email,
                 text: $viewModel.email
             )
             
             AppSecureField(
-                placeholder: "Password",
+                placeholder: L10n.Auth.password,
                 text: $viewModel.password
             )
         }
     }
     
     var loginButton: some View {
-        AppPrimaryButton(title: "Login") {
+        AppPrimaryButton(title: L10n.Auth.login) {
             Task {
                 await viewModel.login(appState: appState)
             }
@@ -69,8 +75,12 @@ struct LoginView: View {
     }
     
     var registerButton: some View {
-        NavigationLink(destination: RegistrationView()) {
-            Text("Don't have an account? Register")
+        NavigationLink(
+            destination: RegistrationView(
+                viewModel: registrationViewModel
+            )
+        ) {
+            Text(L10n.Auth.noAccount)
                 .font(.footnote)
                 .foregroundColor(.gray)
         }

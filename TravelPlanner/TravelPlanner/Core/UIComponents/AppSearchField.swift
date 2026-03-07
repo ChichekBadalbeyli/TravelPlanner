@@ -14,7 +14,7 @@ struct AppSearchField: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
+            Image(systemName: L10n.Icon.magnifyingglass)
                 .foregroundColor(.gray)
 
             TextField(placeholder, text: $text)

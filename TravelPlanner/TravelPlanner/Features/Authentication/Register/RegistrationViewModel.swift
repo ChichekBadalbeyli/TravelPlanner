@@ -24,10 +24,10 @@ final class RegistrationViewModel: ObservableObject {
     confirmPassword.count >= 6
   }
   
-  private let authService: AuthServicing
+  private let registerUseCase: RegisterUseCase
   
-  init(authService: AuthServicing = AuthService()) {
-    self.authService = authService
+  init(registerUseCase: RegisterUseCase) {
+    self.registerUseCase = registerUseCase
   }
   
   func register(appState: AppState) async {
@@ -40,7 +40,7 @@ final class RegistrationViewModel: ObservableObject {
     
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
     do {
-      try await authService.register(email: trimmedEmail, password: password)
+      try await registerUseCase.execute(email: trimmedEmail, password: password)
       appState.isAuthenticated = true
     } catch {
       errorMessage = AuthErrorMapper.userFriendlyMessage(for: error)
@@ -53,19 +53,19 @@ final class RegistrationViewModel: ObservableObject {
     guard !trimmedEmail.isEmpty,
           !password.isEmpty,
           !confirmPassword.isEmpty else {
-      return "Please fill in all fields."
+      return L10n.Validation.fillAll
     }
     
     guard trimmedEmail.isValidEmail else {
-      return "Please enter a valid email address."
+      return L10n.Validation.invalidEmail
     }
     
     guard password.count >= 6 else {
-      return "Password must be at least 6 characters."
+      return L10n.Validation.passwordLength
     }
     
     guard password == confirmPassword else {
-      return "Passwords do not match."
+      return L10n.Validation.passwordsMismatch
     }
     
     return nil

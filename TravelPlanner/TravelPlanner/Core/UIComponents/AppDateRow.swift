@@ -15,7 +15,7 @@ struct AppDateRow: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Image(systemName: "calendar")
+                Image(systemName: L10n.Icon.calendar)
                     .foregroundColor(.gray)
 
                 Text(text)
@@ -23,7 +23,7 @@ struct AppDateRow: View {
 
                 Spacer()
 
-                Image(systemName: "chevron.right")
+                Image(systemName: L10n.Icon.chevronRight)
                     .foregroundColor(.gray)
             }
             .padding()

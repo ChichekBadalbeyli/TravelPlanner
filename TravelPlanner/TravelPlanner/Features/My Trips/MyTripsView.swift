@@ -28,7 +28,7 @@ struct MyTripsView: View {
                     tripsList
                 }
             }
-            .navigationTitle("My Trips")
+            .navigationTitle(L10n.Trips.title)
             .alert(isPresented: $showDeleteAlert) {
                 deleteAlert()
             }
@@ -52,14 +52,14 @@ struct MyTripsView: View {
     
     private var emptyState: some View {
         VStack(spacing: 16) {
-            Image(systemName: "airplane")
+            Image(systemName: L10n.Icon.airplane)
                 .font(.system(size: 50))
                 .foregroundColor(.gray)
             
-            Text("No trips yet")
+            Text(L10n.Trips.emptyTitle)
                 .font(.headline)
             
-            Text("Start planning your first trip!")
+            Text(L10n.Trips.emptySubtitle)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -83,7 +83,7 @@ struct MyTripsView: View {
                             tripToDelete = trip
                             showDeleteAlert = true
                         } label: {
-                            Label("Delete", systemImage: "trash")
+                            Label(L10n.Trips.delete, systemImage: L10n.Icon.trash)
                         }
                     }
             }
@@ -103,23 +103,23 @@ struct MyTripsView: View {
     
     private func deleteAlert() -> Alert {
         Alert(
-            title: Text("Delete Trip"),
-            message: Text("Are you sure you want to delete this trip?"),
-            primaryButton: .destructive(Text("Delete")) {
+            title: Text(L10n.Trips.deleteTitle),
+            message: Text(L10n.Trips.deleteMessage),
+            primaryButton: .destructive(Text(L10n.Trips.delete)) {
                 if let trip = tripToDelete {
                     context.delete(trip)
                     try? context.save()
                     tripToDelete = nil
                 }
             },
-            secondaryButton: .cancel()
+            secondaryButton: .cancel(Text(L10n.Common.cancel))
         )
     }
     
     private func dateRange(_ trip: TripEntity) -> String {
         let start = DateFormatters.medium.string(from: trip.startDate)
         let end = DateFormatters.medium.string(from: trip.endDate)
-        return "\(start) - \(end)"
+        return String(format: L10n.City.dateRangeFormat, start, end)
     }
 }
 

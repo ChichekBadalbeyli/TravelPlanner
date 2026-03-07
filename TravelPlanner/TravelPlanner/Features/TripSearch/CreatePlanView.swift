@@ -10,6 +10,8 @@ import SwiftUI
 struct CreatePlanView: View {
 
     @StateObject private var viewModel = CreatePlanViewModel()
+    @StateObject private var coordinator = CreatePlanFlowCoordinator()
+    @Environment(\.appDependencies) private var dependencies
 
     var body: some View {
         ZStack {
@@ -17,12 +19,12 @@ struct CreatePlanView: View {
             VStack {
                 AppCard {
                     VStack(spacing: 30) {
-                        Text("Create Plan")
+                        Text(L10n.CreatePlan.title)
                             .font(.largeTitle.bold())
                             .foregroundColor(.black)
                         VStack(spacing: 20) {
                             AppSearchField(
-                                placeholder: "Search city",
+                                placeholder: L10n.CreatePlan.searchCity,
                                 text: $viewModel.city
                             )
                             AppDateRow(
@@ -30,8 +32,12 @@ struct CreatePlanView: View {
                             ) {
                                 viewModel.isDatePickerPresented = true
                             }
-                            AppPrimaryButton(title: "Continue") {
-                                viewModel.navigateNext = true
+                            AppPrimaryButton(title: L10n.CreatePlan.continueButton) {
+                                coordinator.citySelection = CitySelection(
+                                    city: viewModel.city,
+                                    startDate: viewModel.startDate,
+                                    endDate: viewModel.endDate
+                                )
                             }
                             .disabled(!viewModel.isFormValid)
                             .opacity(viewModel.isFormValid ? 1 : 0.5)
@@ -42,35 +48,43 @@ struct CreatePlanView: View {
                 .sheet(isPresented: $viewModel.isDatePickerPresented) {
                     datePickerSheet
                 }
-                .navigationDestination(isPresented: $viewModel.navigateNext) {
-                    CityView(
-                        city: viewModel.city,
-                        startDate: viewModel.startDate,
-                        endDate: viewModel.endDate
-                    )
-                }
             }
+        }
+        .navigationDestination(item: $coordinator.citySelection) { selection in
+            CityView(
+                city: selection.city,
+                startDate: selection.startDate,
+                endDate: selection.endDate,
+                viewModel: CityViewModel(
+                    fetchCityDataUseCase: DefaultFetchCityDataUseCase(
+                        weatherRepository: dependencies.makeWeatherRepository(),
+                        placesRepository: dependencies.makePlacesRepository()
+                    ),
+                    generateTripPlanUseCase: DefaultGenerateTripPlanUseCase()
+                )
+            )
+            .environmentObject(coordinator)
         }
     }
     
     private var dateRangeText: String {
         let start = DateFormatters.medium.string(from: viewModel.startDate)
         let end = DateFormatters.medium.string(from: viewModel.endDate)
-        return "\(start) - \(end)"
+        return String(format: L10n.City.dateRangeFormat, start, end)
     }
 
     private var datePickerSheet: some View {
         VStack(spacing: 20) {
-            DatePicker("Start Date",
+            DatePicker(L10n.DatePicker.startDate,
                        selection: $viewModel.startDate,
                        displayedComponents: .date)
 
-            DatePicker("End Date",
+            DatePicker(L10n.DatePicker.endDate,
                        selection: $viewModel.endDate,
                        in: viewModel.startDate...,
                        displayedComponents: .date)
 
-            AppPrimaryButton(title: "Save Dates") {
+            AppPrimaryButton(title: L10n.CreatePlan.saveDates) {
                 viewModel.isDatePickerPresented = false
             }
         }

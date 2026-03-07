@@ -12,51 +12,48 @@ import XCTest
 final class LoginViewModelTests: XCTestCase {
 
     func testValidateEmptyEmail() {
-        let vm = LoginViewModel(authService: MockAuthService())
+        let vm = LoginViewModel(loginUseCase: MockLoginUseCase())
         vm.email = ""
         vm.password = "password1"
-        XCTAssertEqual(vm.validate(), "Please fill in all fields.")
+        XCTAssertEqual(vm.validate(), L10n.Validation.fillAll)
     }
 
     func testValidateEmptyPassword() {
-        let vm = LoginViewModel(authService: MockAuthService())
+        let vm = LoginViewModel(loginUseCase: MockLoginUseCase())
         vm.email = "user@example.com"
         vm.password = ""
-        XCTAssertEqual(vm.validate(), "Please fill in all fields.")
+        XCTAssertEqual(vm.validate(), L10n.Validation.fillAll)
     }
 
     func testValidateInvalidEmail() {
-        let vm = LoginViewModel(authService: MockAuthService())
+        let vm = LoginViewModel(loginUseCase: MockLoginUseCase())
         vm.email = "notanemail"
         vm.password = "password1"
-        XCTAssertEqual(vm.validate(), "Please enter a valid email address.")
+        XCTAssertEqual(vm.validate(), L10n.Validation.invalidEmail)
     }
 
     func testValidateShortPassword() {
-        let vm = LoginViewModel(authService: MockAuthService())
+        let vm = LoginViewModel(loginUseCase: MockLoginUseCase())
         vm.email = "user@example.com"
         vm.password = "12345"
-        XCTAssertEqual(vm.validate(), "Password must be at least 6 characters.")
+        XCTAssertEqual(vm.validate(), L10n.Validation.passwordLength)
     }
 
     func testValidateSuccess() {
-        let vm = LoginViewModel(authService: MockAuthService())
+        let vm = LoginViewModel(loginUseCase: MockLoginUseCase())
         vm.email = "user@example.com"
         vm.password = "password1"
         XCTAssertNil(vm.validate())
     }
 
     func testValidateEmailWithSpaces() {
-        let vm = LoginViewModel(authService: MockAuthService())
+        let vm = LoginViewModel(loginUseCase: MockLoginUseCase())
         vm.email = "  user@example.com  "
         vm.password = "password1"
         XCTAssertNil(vm.validate())
     }
 }
 
-private final class MockAuthService: AuthServicing {
-    func register(email: String, password: String) async throws {}
-    func login(email: String, password: String) async throws {}
-    func logout() throws {}
-    func isUserLoggedIn() -> Bool { false }
+private struct MockLoginUseCase: LoginUseCase {
+    func execute(email: String, password: String) async throws {}
 }

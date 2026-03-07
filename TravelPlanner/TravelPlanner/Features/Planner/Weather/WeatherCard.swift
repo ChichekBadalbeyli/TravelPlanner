@@ -25,7 +25,7 @@ struct WeatherCard: View {
                 .foregroundColor(.orange)
                 .font(.title2)
             
-            Text("\(day.temperature)°")
+            Text(String(format: L10n.Weather.temperatureFormat, day.temperature))
                 .font(.headline)
         }
         .padding()

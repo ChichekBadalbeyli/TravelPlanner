@@ -9,8 +9,12 @@ import SwiftUI
 
 struct RegistrationView: View {
 
-    @StateObject private var viewModel = RegistrationViewModel()
+    @StateObject private var viewModel: RegistrationViewModel
     @EnvironmentObject var appState: AppState
+
+    init(viewModel: RegistrationViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         ZStack {
@@ -32,10 +36,10 @@ struct RegistrationView: View {
     var headImage: some View {
         VStack(spacing: 40) {
             VStack(spacing: 12) {
-                Image(systemName: "globe")
+                Image(systemName: L10n.Icon.globe)
                     .font(.system(size: 50))
                     .foregroundColor(.black)
-                Text("Create Account")
+                Text(L10n.Auth.createAccount)
                     .font(.largeTitle.bold())
                     .foregroundColor(.black)
             }
@@ -45,22 +49,22 @@ struct RegistrationView: View {
     var registerText: some View {
         VStack {
             AppTextField(
-                placeholder: "Email",
+                placeholder: L10n.Auth.email,
                 text: $viewModel.email
             )
             AppSecureField(
-                placeholder: "Password",
+                placeholder: L10n.Auth.password,
                 text: $viewModel.password
             )
             AppSecureField(
-                placeholder: "Confirm Password",
+                placeholder: L10n.Auth.confirmPassword,
                 text: $viewModel.confirmPassword
             )
         }
     }
     
     var registerButton: some View {
-        AppPrimaryButton(title: "Register") {
+        AppPrimaryButton(title: L10n.Auth.register) {
             Task {
                 await viewModel.register(appState: appState)
             }

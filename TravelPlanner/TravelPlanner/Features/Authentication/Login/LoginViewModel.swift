@@ -22,10 +22,10 @@ final class LoginViewModel: ObservableObject {
     password.count >= 6
   }
   
-  private let authService: AuthServicing
+    private let loginUseCase: LoginUseCase
   
-  init(authService: AuthServicing = AuthService()) {
-    self.authService = authService
+    init(loginUseCase: LoginUseCase) {
+        self.loginUseCase = loginUseCase
   }
   
   func login(appState: AppState) async {
@@ -38,7 +38,7 @@ final class LoginViewModel: ObservableObject {
     
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
     do {
-      try await authService.login(email: trimmedEmail, password: password)
+            try await loginUseCase.execute(email: trimmedEmail, password: password)
       appState.isAuthenticated = true
     } catch {
       errorMessage = AuthErrorMapper.userFriendlyMessage(for: error)
@@ -48,17 +48,17 @@ final class LoginViewModel: ObservableObject {
   func validate() -> String? {
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
     
-    guard !trimmedEmail.isEmpty, !password.isEmpty else {
-      return "Please fill in all fields."
-    }
-    
-    guard trimmedEmail.isValidEmail else {
-      return "Please enter a valid email address."
-    }
-    
-    guard password.count >= 6 else {
-      return "Password must be at least 6 characters."
-    }
+        guard !trimmedEmail.isEmpty, !password.isEmpty else {
+            return L10n.Validation.fillAll
+        }
+        
+        guard trimmedEmail.isValidEmail else {
+            return L10n.Validation.invalidEmail
+        }
+        
+        guard password.count >= 6 else {
+            return L10n.Validation.passwordLength
+        }
     
     return nil
   }

@@ -1,0 +1,101 @@
+/* App */
+"app.name" = "TravelPlanner";
+
+/* Auth */
+"auth.login" = "Login";
+"auth.register" = "Register";
+"auth.logout" = "Log Out";
+"auth.email" = "Email";
+"auth.password" = "Password";
+"auth.confirmPassword" = "Confirm Password";
+"auth.createAccount" = "Create Account";
+"auth.noAccount" = "Don't have an account? Register";
+
+/* Validation */
+"validation.fillAll" = "Please fill in all fields.";
+"validation.invalidEmail" = "Please enter a valid email address.";
+"validation.passwordLength" = "Password must be at least 6 characters.";
+"validation.passwordsMismatch" = "Passwords do not match.";
+"validation.invalidCredentials" = "Invalid email or password.";
+"validation.emailAlreadyInUse" = "This email is already registered.";
+
+/* Tabs */
+"tab.create" = "Create";
+"tab.trips" = "Trips";
+"tab.profile" = "Profile";
+
+/* Create plan */
+"createPlan.title" = "Create Plan";
+"createPlan.searchCity" = "Search city";
+"createPlan.continue" = "Continue";
+"createPlan.saveDates" = "Save Dates";
+"createPlan.createPlanButton" = "Create Plan";
+
+/* City / Planner */
+"city.weather" = "Weather";
+"city.topAttractions" = "Top Attractions";
+"city.loadError" = "The information could not be loaded. Please check city name and try again.";
+"city.dateRangeFormat" = "%@ - %@";
+
+/* Trips */
+"trips.title" = "My Trips";
+"trips.emptyTitle" = "No trips yet";
+"trips.emptySubtitle" = "Start planning your first trip!";
+"trips.delete" = "Delete";
+"trips.deleteTitle" = "Delete Trip";
+"trips.deleteMessage" = "Are you sure you want to delete this trip?";
+
+/* Plan */
+"plan.title" = "Your Plan";
+"plan.saveTrip" = "Save Trip";
+"plan.saveError" = "Trip could not be saved. Please try again.";
+"plan.placeFormat" = "• %@";
+
+/* Profile */
+"profile.title" = "Profile";
+"profile.trips" = "Trips";
+"profile.unknownUser" = "Unknown";
+
+/* Place details */
+"placeDetails.loadError" = "Failed to load place details.";
+
+/* Date picker */
+"datePicker.startDate" = "Start Date";
+"datePicker.endDate" = "End Date";
+
+/* Validation (auth errors) */
+"validation.firebaseNotConfigured" = "Firebase is not configured. Add GoogleService-Info.plist and rebuild.";
+"validation.accountDisabled" = "This account has been disabled.";
+"validation.tooManyAttempts" = "Too many attempts. Try again later.";
+
+/* Common */
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+
+/* SF Symbol names (icons) */
+"icon.airplane" = "airplane";
+"icon.globe" = "globe";
+"icon.magnifyingglass" = "magnifyingglass";
+"icon.calendar" = "calendar";
+"icon.chevronRight" = "chevron.right";
+"icon.personCircleFill" = "person.circle.fill";
+"icon.envelope" = "envelope";
+"icon.plusCircle" = "plus.circle";
+"icon.map" = "map";
+"icon.person" = "person";
+"icon.trash" = "trash";
+"icon.checkmarkCircleFill" = "checkmark.circle.fill";
+"icon.circle" = "circle";
+"icon.mappinEllipse" = "mappin.and.ellipse";
+"icon.phoneFill" = "phone.fill";
+"icon.clockFill" = "clock.fill";
+"icon.sunMaxFill" = "sun.max.fill";
+"icon.cloudSunFill" = "cloud.sun.fill";
+"icon.cloudFogFill" = "cloud.fog.fill";
+"icon.cloudDrizzleFill" = "cloud.drizzle.fill";
+"icon.cloudSnowFill" = "cloud.snow.fill";
+"icon.cloudRainFill" = "cloud.rain.fill";
+"icon.cloudBoltFill" = "cloud.bolt.fill";
+
+/* Weather */
+"weather.temperatureFormat" = "%d°";

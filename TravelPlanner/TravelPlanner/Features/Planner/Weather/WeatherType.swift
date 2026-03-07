@@ -18,13 +18,13 @@ enum WeatherType {
     
     var icon: String {
         switch self {
-        case .clear: return "sun.max.fill"
-        case .cloudy: return "cloud.sun.fill"
-        case .fog: return "cloud.fog.fill"
-        case .drizzle: return "cloud.drizzle.fill"
-        case .snow: return "cloud.snow.fill"
-        case .rain: return "cloud.rain.fill"
-        case .thunderstorm: return "cloud.bolt.fill"
+        case .clear: return L10n.Icon.sunMaxFill
+        case .cloudy: return L10n.Icon.cloudSunFill
+        case .fog: return L10n.Icon.cloudFogFill
+        case .drizzle: return L10n.Icon.cloudDrizzleFill
+        case .snow: return L10n.Icon.cloudSnowFill
+        case .rain: return L10n.Icon.cloudRainFill
+        case .thunderstorm: return L10n.Icon.cloudBoltFill
         }
     }
     

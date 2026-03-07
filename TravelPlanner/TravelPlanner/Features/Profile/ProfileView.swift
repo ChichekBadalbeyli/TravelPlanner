@@ -21,7 +21,7 @@ struct ProfileView: View {
             logoutButton
         }
         .padding()
-        .navigationTitle("Profile")
+        .navigationTitle(L10n.Profile.title)
     }
     
     private var tripsCount: String {
@@ -32,7 +32,7 @@ struct ProfileView: View {
     
     private var profileHeader: some View {
         VStack(spacing: 12) {
-            Image(systemName: "person.circle.fill")
+            Image(systemName: L10n.Icon.personCircleFill)
                 .resizable()
                 .frame(width: 100, height: 100)
                 .foregroundColor(.blue)
@@ -43,8 +43,8 @@ struct ProfileView: View {
     
     private var userInfo: some View {
         VStack(alignment: .leading, spacing: 16) {
-            infoRow(icon: "envelope", title: "Email", value: userEmail)
-            infoRow(icon: "airplane", title: "Trips", value: tripsCount)
+            infoRow(icon: L10n.Icon.envelope, title: L10n.Auth.email, value: userEmail)
+            infoRow(icon: L10n.Icon.airplane, title: L10n.Profile.trips, value: tripsCount)
         }
         .padding()
         .background(Color(.systemGray6))
@@ -67,7 +67,7 @@ struct ProfileView: View {
         Button {
             appState.logout()
         } label: {
-            Text("Log Out")
+            Text(L10n.Auth.logout)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(Color.red)
@@ -77,6 +77,6 @@ struct ProfileView: View {
     }
     
     private var userEmail: String {
-        appState.currentUserEmail ?? "Unknown"
+        appState.currentUserEmail ?? L10n.Profile.unknownUser
     }
 }

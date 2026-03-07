@@ -14,6 +14,7 @@ struct TripPlanView: View {
   @Environment(\.modelContext) private var context
   @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var appState: AppState
+  @Environment(\.appDependencies) private var dependencies
   @State private var saveErrorMessage: String?
   let isSavedTrip: Bool
   let city: String
@@ -30,7 +31,7 @@ struct TripPlanView: View {
             Text(formatted(day.date))
               .font(.headline)
             ForEach(day.places) { place in
-              Text("• \(place.name)")
+              Text(String(format: L10n.Plan.placeFormat, place.name))
                 .padding(.leading)
             }
           }
@@ -41,7 +42,7 @@ struct TripPlanView: View {
           .shadow(radius: 3)
         }
         if !isSavedTrip {
-          AppPrimaryButton(title: "Save Trip") {
+          AppPrimaryButton(title: L10n.Plan.saveTrip) {
             saveTrip()
           }
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -49,7 +50,7 @@ struct TripPlanView: View {
       }
       .padding()
     }
-    .navigationTitle("Your Plan")
+    .navigationTitle(L10n.Plan.title)
   }
   
   func formatted(_ date: Date) -> String {
@@ -59,17 +60,12 @@ struct TripPlanView: View {
   private func saveTrip() {
     do {
       guard let uid = appState.currentUserId else { return }
-      let repository = DefaultTripsRepository(context: context)
-      try repository.saveTrip(
-        city: city,
-        startDate: startDate,
-        endDate: endDate,
-        userId: uid,
-        plan: plan
-      )
+      let repository = dependencies.makeTripsRepository(context)
+      let useCase = DefaultSaveTripUseCase(repository: repository)
+      try useCase.execute(city: city, startDate: startDate, endDate: endDate, userId: uid, plan: plan)
       dismiss()
     } catch {
-      saveErrorMessage = "Trip could not be saved. Please try again"
+      saveErrorMessage = L10n.Plan.saveError
     }
   }
 }

@@ -22,7 +22,7 @@ struct PlaceRow: View {
             }
             Spacer()
             Button(action: onAdd) {
-                Image(systemName: place.isAdded ? "checkmark.circle.fill" : "circle")
+                Image(systemName: place.isAdded ? L10n.Icon.checkmarkCircleFill : L10n.Icon.circle)
                     .font(.system(size: 22))
                     .foregroundColor(place.isAdded ? .yellow : .gray)
             }

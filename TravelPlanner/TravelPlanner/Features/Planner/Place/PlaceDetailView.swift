@@ -13,11 +13,12 @@ struct PlaceDetailView: View {
     
     let place: Place
     
-    @StateObject private var viewModel = PlaceDetailViewModel()
+    @StateObject private var viewModel: PlaceDetailViewModel
     @State private var region: MKCoordinateRegion
     
-    init(place: Place) {
+    init(place: Place, viewModel: PlaceDetailViewModel) {
         self.place = place
+        _viewModel = StateObject(wrappedValue: viewModel)
         _region = State(
             initialValue: MKCoordinateRegion(
                 center: CLLocationCoordinate2D(
@@ -70,19 +71,19 @@ struct PlaceDetailView: View {
             if let details = viewModel.details {
                 
                 if let address = details.formatted {
-                    infoRow(icon: "mappin.and.ellipse", text: address)
+                    infoRow(icon: L10n.Icon.mappinEllipse, text: address)
                 }
                 
                 if let website = details.website {
-                    infoRow(icon: "globe", text: website)
+                    infoRow(icon: L10n.Icon.globe, text: website)
                 }
                 
                 if let phone = details.phone {
-                    infoRow(icon: "phone.fill", text: phone)
+                    infoRow(icon: L10n.Icon.phoneFill, text: phone)
                 }
                 
                 if let hours = details.openingHours {
-                    infoRow(icon: "clock.fill", text: hours)
+                    infoRow(icon: L10n.Icon.clockFill, text: hours)
                 }
             }
         }

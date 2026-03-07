@@ -10,12 +10,26 @@ import SwiftUI
 
 struct CityView: View {
     
-    @StateObject private var viewModel = CityViewModel()
+    @StateObject private var viewModel: CityViewModel
+    @Environment(\.appDependencies) private var dependencies
+    @EnvironmentObject private var coordinator: CreatePlanFlowCoordinator
     @Environment(\.dismiss) private var dismiss
     
     let city: String
     let startDate: Date
     let endDate: Date
+
+    init(
+        city: String,
+        startDate: Date,
+        endDate: Date,
+        viewModel: CityViewModel
+    ) {
+        self.city = city
+        self.startDate = startDate
+        self.endDate = endDate
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         ZStack {
@@ -23,7 +37,7 @@ struct CityView: View {
                 .ignoresSafeArea()
             ScrollView {
                 VStack(spacing: 24) {
-                    Text("\(formatted(startDate)) - \(formatted(endDate))")
+                    Text(String(format: L10n.City.dateRangeFormat, formatted(startDate), formatted(endDate)))
                         .foregroundColor(.gray)
                     weatherSection
                     attractionsSection
@@ -35,6 +49,7 @@ struct CityView: View {
                     .padding()
             }
         }
+        .appLoadingOverlay(viewModel.isLoading)
         .navigationTitle(city)
         .onAppear {
             viewModel.load(
@@ -44,40 +59,41 @@ struct CityView: View {
             )
         }
         .sheet(item: $viewModel.selectedPlace) { place in
-           PlaceDetailView(place: place)
+           PlaceDetailView(
+               place: place,
+               viewModel: PlaceDetailViewModel(
+                   fetchPlaceDetailsUseCase: DefaultFetchPlaceDetailsUseCase(
+                       placesRepository: dependencies.makePlacesRepository()
+                   )
+               )
+           )
         }
         .alert("", isPresented: $viewModel.showError) {
-            Button("OK", role: .cancel) {
+            Button(L10n.Common.ok, role: .cancel) {
                 dismiss()
             }
         } message: {
-            Text(viewModel.errorMessage ?? "The information could not be loaded. Please check city name and try again.")
+            Text(viewModel.errorMessage ?? L10n.City.loadError)
         }
-        .navigationDestination(isPresented: $viewModel.navigateToPlan) {
-            if let plan = viewModel.generatedPlan {
-                TripPlanView(
-                    isSavedTrip: false,
-                    city: city,
-                    startDate: startDate,
-                    endDate: endDate,
-                    plan: plan
-                )
-            }
+        .navigationDestination(item: $coordinator.planDestination) { destination in
+            TripPlanView(
+                isSavedTrip: destination.isSavedTrip,
+                city: destination.city,
+                startDate: destination.startDate,
+                endDate: destination.endDate,
+                plan: destination.plan
+            )
         }
     }
     
     var weatherSection: some View {
         VStack(alignment: .leading) {
-            Text("Weather")
+            Text(L10n.City.weather)
                 .font(.headline)
-            if viewModel.isLoading {
-                ProgressView()
-            } else {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.weather) { day in
-                            WeatherCard(day: day)
-                        }
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(viewModel.weather) { day in
+                        WeatherCard(day: day)
                     }
                 }
             }
@@ -86,7 +102,7 @@ struct CityView: View {
     
     var attractionsSection: some View {
         VStack(alignment: .leading) {
-            Text("Top Attractions")
+            Text(L10n.City.topAttractions)
                 .font(.headline)
             
             ForEach(viewModel.places) { place in
@@ -109,8 +125,17 @@ struct CityView: View {
                 startDate: startDate,
                 endDate: endDate
             )
+            if let plan = viewModel.generatedPlan {
+                coordinator.planDestination = PlanDestination(
+                    isSavedTrip: false,
+                    city: city,
+                    startDate: startDate,
+                    endDate: endDate,
+                    plan: plan
+                )
+            }
         } label: {
-            Text("Create Plan")
+            Text(L10n.CreatePlan.createPlanButton)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(viewModel.hasSelectedPlaces ? Color.blue : Color.gray)
