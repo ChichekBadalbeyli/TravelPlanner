@@ -30,10 +30,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		34CEC2272F5C462C00B7E0FA /* Exceptions for "TravelPlanner" folder in "TravelPlannerTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TravelPlannerTests/LoginViewModelTests.swift,
+				TravelPlannerTests/RegisterViewModelTests.swift,
+				TravelPlannerTests/ValidationTests.swift,
+			);
+			target = 34EA55012F5B3800004DAD10 /* TravelPlannerTests */;
+		};
 		34EA54E42F5B34F6004DAD10 /* Exceptions for "TravelPlanner" folder in "TravelPlanner" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				TravelPlannerTests/LoginViewModelTests.swift,
+				TravelPlannerTests/RegisterViewModelTests.swift,
+				TravelPlannerTests/ValidationTests.swift,
 			);
 			target = 3419665E2F4903A100DA2ED1 /* TravelPlanner */;
 		};
@@ -44,13 +56,9 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				34EA54E42F5B34F6004DAD10 /* Exceptions for "TravelPlanner" folder in "TravelPlanner" target */,
+				34CEC2272F5C462C00B7E0FA /* Exceptions for "TravelPlanner" folder in "TravelPlannerTests" target */,
 			);
 			path = TravelPlanner;
-			sourceTree = "<group>";
-		};
-		34EA55022F5B3800004DAD10 /* TravelPlannerTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TravelPlannerTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -78,7 +86,6 @@
 			isa = PBXGroup;
 			children = (
 				341966612F4903A100DA2ED1 /* TravelPlanner */,
-				34EA55022F5B3800004DAD10 /* TravelPlannerTests */,
 				341967002F49E5D600DA2ED1 /* TravelPlanner.app */,
 				34EA550E2F5B3800004DAD10 /* TravelPlannerTests.xctest */,
 				34CEC21D2F5C403C00B7E0FA /* GoogleService-Info.plist */,
@@ -125,9 +132,6 @@
 			);
 			dependencies = (
 				34EA550B2F5B3800004DAD10 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				34EA55022F5B3800004DAD10 /* TravelPlannerTests */,
 			);
 			name = TravelPlannerTests;
 			productName = TravelPlannerTests;

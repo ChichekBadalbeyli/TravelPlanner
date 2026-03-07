@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  AppDateRow.swift
 //  TravelPlanner
 //
 //  Created by Chichak Badalbayli on 2/22/26.

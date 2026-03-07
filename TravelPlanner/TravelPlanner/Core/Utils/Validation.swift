@@ -1,3 +1,10 @@
+//
+//  String.swift
+//  TravelPlanner
+//
+//  Created by Chichak Badalbayli on 2/22/26.
+//
+
 import Foundation
 
 extension String {

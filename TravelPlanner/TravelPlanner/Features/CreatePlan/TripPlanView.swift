@@ -1,5 +1,5 @@
 //
-//  PlanView.swift
+//  TripPlanView.swift
 //  TravelPlanner
 //
 //  Created by Chichak Badalbayli on 2/28/26.

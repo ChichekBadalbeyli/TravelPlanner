@@ -14,10 +14,7 @@ final class DefaultNetworkService: NetworkService {
 
     init(session: URLSession = .shared) {
         self.session = session
-        
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        self.decoder = decoder
+        self.decoder = JSONDecoder()
     }
 
     func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {

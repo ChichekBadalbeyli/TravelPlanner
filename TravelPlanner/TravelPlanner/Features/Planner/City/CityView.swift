@@ -12,7 +12,7 @@ struct CityView: View {
     
     @StateObject private var viewModel: CityViewModel
     @Environment(\.appDependencies) private var dependencies
-    @EnvironmentObject private var coordinator: CreatePlanFlowCoordinator
+    @EnvironmentObject private var coordinator: SearchFlowCoordinator
     @Environment(\.dismiss) private var dismiss
     
     let city: String

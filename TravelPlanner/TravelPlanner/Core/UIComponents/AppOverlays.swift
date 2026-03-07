@@ -1,3 +1,10 @@
+//
+//  AppLoadingOverlay.swift
+//  TravelPlanner
+//
+//  Created by Chichak Badalbayli on 2/22/26.
+//
+
 import SwiftUI
 
 struct AppLoadingOverlay: ViewModifier {

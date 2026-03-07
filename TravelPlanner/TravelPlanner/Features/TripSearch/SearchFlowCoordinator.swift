@@ -1,9 +1,16 @@
+//
+//  CreatePlanFlowCoordinator.swift
+//  TravelPlanner
+//
+//  Created by Chichak Badalbayli on 2/21/26.
+//
+
 import Foundation
 import SwiftUI
 import Combine
 
 @MainActor
-final class CreatePlanFlowCoordinator: ObservableObject {
+final class SearchFlowCoordinator: ObservableObject {
     @Published var citySelection: CitySelection?
     @Published var planDestination: PlanDestination?
 }

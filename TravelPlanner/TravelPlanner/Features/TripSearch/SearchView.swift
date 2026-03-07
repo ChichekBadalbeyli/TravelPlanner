@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct CreatePlanView: View {
+struct SearchView: View {
 
-    @StateObject private var viewModel = CreatePlanViewModel()
-    @StateObject private var coordinator = CreatePlanFlowCoordinator()
+    @StateObject private var viewModel = SearchViewModel()
+    @StateObject private var coordinator = SearchFlowCoordinator()
     @Environment(\.appDependencies) private var dependencies
 
     var body: some View {

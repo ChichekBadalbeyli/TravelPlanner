@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class CreatePlanViewModel: ObservableObject {
+final class SearchViewModel: ObservableObject {
 
     @Published var city: String = ""
     @Published var startDate: Date = Date()

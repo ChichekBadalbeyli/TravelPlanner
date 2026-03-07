@@ -13,7 +13,7 @@ struct MainTabView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                CreatePlanView()
+                    SearchView()
             }
             .tabItem {
                 Label(L10n.Tab.create, systemImage: L10n.Icon.plusCircle)

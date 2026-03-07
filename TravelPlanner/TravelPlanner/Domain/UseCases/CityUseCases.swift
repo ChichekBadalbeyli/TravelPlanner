@@ -1,3 +1,10 @@
+//
+//  CityUseCases.swift
+//  TravelPlanner
+//
+//  Created by Chichak Badalbayli on 2/25/26.
+//
+
 import Foundation
 import CoreLocation
 
@@ -50,8 +57,7 @@ struct DefaultGenerateTripPlanUseCase: GenerateTripPlanUseCase {
         let start = calendar.startOfDay(for: startDate)
         let end = calendar.startOfDay(for: endDate)
         let daysCount = (calendar.dateComponents([.day], from: start, to: end).day ?? 0) + 1
-        let maxPerDay = max(1, remaining.count / daysCount)
-
+        let maxPerDay = Int(ceil(Double(remaining.count) / Double(daysCount)))
         var days: [TripDay] = []
         for i in 0..<daysCount {
             guard !remaining.isEmpty else { break }
