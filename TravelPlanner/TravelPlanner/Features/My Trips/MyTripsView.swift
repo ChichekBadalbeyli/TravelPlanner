@@ -19,31 +19,29 @@ struct MyTripsView: View {
     @State private var selectedTrip: TripEntity?
     @State private var tripToDelete: TripEntity?
     
-    var body: some View {
-        NavigationStack {
-            Group {
-                if trips.isEmpty {
-                    emptyState
-                } else {
-                    tripsList
-                }
-            }
-            .navigationTitle(L10n.Trips.title)
-            .alert(isPresented: $showDeleteAlert) {
-                deleteAlert()
-            }
-            .sheet(item: $selectedTrip) { trip in
-                TripPlanView(
-                    isSavedTrip: true,
-                    city: trip.city,
-                    startDate: trip.startDate,
-                    endDate: trip.endDate,
-                    plan: decodePlan(from: trip)
-                )
-            }
-            .presentationDetents([ .large])
-            }
-        }
+  var body: some View {
+      Group {
+          if trips.isEmpty {
+              emptyState
+          } else {
+              tripsList
+          }
+      }
+      .navigationTitle(L10n.Trips.title)
+      .alert(isPresented: $showDeleteAlert) {
+          deleteAlert()
+      }
+      .sheet(item: $selectedTrip) { trip in
+          TripPlanView(
+              isSavedTrip: true,
+              city: trip.city,
+              startDate: trip.startDate,
+              endDate: trip.endDate,
+              plan: decodePlan(from: trip)
+          )
+          .presentationDetents([.large])
+      }
+  }
     
     private func decodePlan(from trip: TripEntity) -> TripPlan {
         let repository = DefaultTripsRepository(context: context)

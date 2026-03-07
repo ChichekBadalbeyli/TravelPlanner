@@ -51,6 +51,19 @@ struct TripPlanView: View {
       .padding()
     }
     .navigationTitle(L10n.Plan.title)
+    .alert(
+      L10n.Common.ok,
+      isPresented: Binding(
+        get: { saveErrorMessage != nil },
+        set: { if !$0 { saveErrorMessage = nil } }
+      )
+    ) {
+      Button(L10n.Common.ok, role: .cancel) {
+        saveErrorMessage = nil
+      }
+    } message: {
+      Text(saveErrorMessage ?? "")
+    }
   }
   
   func formatted(_ date: Date) -> String {
