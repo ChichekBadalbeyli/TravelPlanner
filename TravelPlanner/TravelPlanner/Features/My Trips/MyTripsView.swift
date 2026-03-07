@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 import SwiftData
-import FirebaseAuth
 
 struct MyTripsView: View {
     
     @Environment(\.modelContext) private var context
+    @EnvironmentObject private var appState: AppState
     @Query(sort: \TripEntity.startDate, order: .reverse)
     private var allTrips: [TripEntity]
     @State private var showDeleteAlert = false
@@ -45,14 +45,10 @@ struct MyTripsView: View {
             }
         }
     
-
-private func decodePlan(from trip: TripEntity) -> TripPlan {
-    do {
-        return try JSONDecoder().decode(TripPlan.self, from: trip.planData)
-    } catch {
-        return TripPlan(days: [])
+    private func decodePlan(from trip: TripEntity) -> TripPlan {
+        let repository = DefaultTripsRepository(context: context)
+        return repository.decodePlan(from: trip)
     }
-}
     
     private var emptyState: some View {
         VStack(spacing: 16) {
@@ -70,25 +66,8 @@ private func decodePlan(from trip: TripEntity) -> TripPlan {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-//    private func makePlan(from trip: TripEntity) -> TripPlan {
-//        let places = trip.places.map { placeName in
-//            Place(
-//                id: UUID().uuidString,
-//                name: placeName,
-//                lat: 0,
-//                lon: 0,
-//                rating: 0
-//            )
-//        }
-//        let day = TripDay(
-//            date: trip.startDate,
-//            places: places
-//        )
-//        return TripPlan(days: [day])
-//    }
-    
     private var trips: [TripEntity] {
-        guard let uid = Auth.auth().currentUser?.uid else { return [] }
+        guard let uid = appState.currentUserId else { return [] }
         return allTrips.filter { $0.userId == uid }
     }
     
@@ -118,18 +97,8 @@ private func decodePlan(from trip: TripEntity) -> TripPlan {
             Text(dateRange(trip))
                 .font(.subheadline)
                 .foregroundColor(.gray)
-          //  Text("\(trip.places.count) places")
-                .font(.caption)
-                .foregroundColor(.secondary)
         }
         .padding(.vertical, 4)
-    }
-    
-    private func askDelete(at offsets: IndexSet) {
-        if let index = offsets.first {
-            tripToDelete = trips[index]
-            showDeleteAlert = true
-        }
     }
     
     private func deleteAlert() -> Alert {
@@ -148,9 +117,9 @@ private func decodePlan(from trip: TripEntity) -> TripPlan {
     }
     
     private func dateRange(_ trip: TripEntity) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return "\(formatter.string(from: trip.startDate)) - \(formatter.string(from: trip.endDate))"
+        let start = DateFormatters.medium.string(from: trip.startDate)
+        let end = DateFormatters.medium.string(from: trip.endDate)
+        return "\(start) - \(end)"
     }
 }
 

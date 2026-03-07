@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 enum OpenMeteoEndpoints {
     case geocode(city: String)
     case forecast(

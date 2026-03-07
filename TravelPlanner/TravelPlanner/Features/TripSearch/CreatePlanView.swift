@@ -14,7 +14,7 @@ struct CreatePlanView: View {
     var body: some View {
         ZStack {
             AppGradient()
-            VStack() {
+            VStack {
                 AppCard {
                     VStack(spacing: 30) {
                         Text("Create Plan")
@@ -54,9 +54,9 @@ struct CreatePlanView: View {
     }
     
     private var dateRangeText: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return "\(formatter.string(from: viewModel.startDate)) - \(formatter.string(from: viewModel.endDate))"
+        let start = DateFormatters.medium.string(from: viewModel.startDate)
+        let end = DateFormatters.medium.string(from: viewModel.endDate)
+        return "\(start) - \(end)"
     }
 
     private var datePickerSheet: some View {

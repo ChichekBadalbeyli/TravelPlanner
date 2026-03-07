@@ -6,13 +6,15 @@
 //
 
 import Foundation
-import Combine
 import SwiftUI
+import Combine
 
+@MainActor
 final class PlaceDetailViewModel: ObservableObject {
     
     @Published var details: PlaceDetails?
     @Published var isLoading = false
+    @Published var errorMessage: String?
     
     private let network: NetworkService
     
@@ -36,7 +38,11 @@ final class PlaceDetailViewModel: ObservableObject {
                 )
             details = response.features.first?.properties
         } catch {
-            print("Failed to load details")
+            if let localized = (error as? LocalizedError)?.errorDescription {
+                errorMessage = localized
+            } else {
+                errorMessage = "Failed to load place details."
+            }
         }
     }
 }

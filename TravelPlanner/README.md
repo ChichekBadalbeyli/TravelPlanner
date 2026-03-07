@@ -33,3 +33,21 @@ The project follows **MVVM architecture**.
 - SwiftData
 - Firebase Authentication
 - MapKit
+
+---
+
+## 🔑 Setup (API keys)
+
+This project uses Geoapify for places/attractions.
+
+- **GEOAPIFY_API_KEY**: set it as an Xcode Build Setting (User-Defined) named `GEOAPIFY_API_KEY` for the `TravelPlanner` target (Debug/Release).
+
+The key is referenced from `Info.plist` as `$(GEOAPIFY_API_KEY)` and read at runtime via `AppConfig.geoapifyApiKey`.
+
+## 🔥 Setup (Firebase)
+
+Firebase config (`GoogleService-Info.plist`) is intentionally **not tracked by git**.
+
+- Download it from Firebase Console for your iOS app
+- Place it at `TravelPlanner/GoogleService-Info.plist`
+- Ensure it’s added to the Xcode project (it’s already referenced in `project.pbxproj`; locally the file just needs to exist)

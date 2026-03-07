@@ -6,9 +6,11 @@
 //
 
 import Foundation
-import Combine
 import CoreLocation
+import SwiftUI
+import Combine
 
+@MainActor
 final class CityViewModel: ObservableObject {
     
     @Published var weather: [WeatherDay] = []
@@ -16,6 +18,7 @@ final class CityViewModel: ObservableObject {
     @Published var selectedPlace: Place?
     @Published var isLoading = false
     @Published var showError = false
+    @Published var errorMessage: String?
     @Published var navigateToPlan = false
     @Published var details: PlaceDetails?
     @Published var generatedPlan: TripPlan?
@@ -59,6 +62,11 @@ final class CityViewModel: ObservableObject {
         }
         catch {
             showError = true
+            if let localized = (error as? LocalizedError)?.errorDescription {
+                errorMessage = localized
+            } else {
+                errorMessage = "The information could not be loaded. Please check city name and try again."
+            }
         }
     }
     
@@ -78,10 +86,8 @@ final class CityViewModel: ObservableObject {
                               startDate: Date,
                               endDate: Date) async throws -> [WeatherDay] {
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let start = formatter.string(from: startDate)
-        let end = formatter.string(from: endDate)
+        let start = DateFormatters.isoDay.string(from: startDate)
+        let end = DateFormatters.isoDay.string(from: endDate)
         
         let forecast: ForecastResponse =
         try await network.request(
@@ -171,20 +177,16 @@ final class CityViewModel: ObservableObject {
     // MARK: - Helpers
     
     private func formattedDay(from string: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = formatter.date(from: string) else {
+        guard let date = DateFormatters.isoDay.date(from: string) else {
             return string
         }
         
-        formatter.dateFormat = "E"
-        return formatter.string(from: date)
+        return DateFormatters.shortWeekday.string(from: date)
     }
     
-    private func distance( from: Place, to: Place) -> Double {
+    private func distance(from: Place, to: Place) -> Double {
         let loc1 = CLLocation(latitude: from.lat, longitude: from.lon)
         let loc2 = CLLocation(latitude: to.lat, longitude: to.lon)
-        return loc1.distance(from: loc2) // в метрах
+        return loc1.distance(from: loc2)
     }
 }

@@ -18,7 +18,7 @@ struct AppSearchField: View {
                 .foregroundColor(.gray)
 
             TextField(placeholder, text: $text)
-                .textInputAutocapitalization(.never)
+            .textContentType(.addressCity)
                 .autocorrectionDisabled()
         }
         .padding()

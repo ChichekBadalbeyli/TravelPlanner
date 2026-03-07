@@ -1,25 +1,27 @@
 //
-//  LoginViewModel.swift
+//  RegisterViewModel.swift
 //  TravelPlanner
 //
 //  Created by Chichak Badalbayli on 2/21/26.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 @MainActor
-final class LoginViewModel: ObservableObject {
+final class RegistrationViewModel: ObservableObject {
   
   @Published var email = ""
   @Published var password = ""
+  @Published var confirmPassword = ""
   @Published var errorMessage: String?
+  
   
   var isFormValid: Bool {
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
-    
     return trimmedEmail.isValidEmail &&
-    password.count >= 6
+    password.count >= 6 &&
+    confirmPassword.count >= 6
   }
   
   private let authService: AuthServicing
@@ -28,7 +30,7 @@ final class LoginViewModel: ObservableObject {
     self.authService = authService
   }
   
-  func login(appState: AppState) async {
+  func register(appState: AppState) async {
     errorMessage = nil
     
     if let validationError = validate() {
@@ -38,7 +40,7 @@ final class LoginViewModel: ObservableObject {
     
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
     do {
-      try await authService.login(email: trimmedEmail, password: password)
+      try await authService.register(email: trimmedEmail, password: password)
       appState.isAuthenticated = true
     } catch {
       errorMessage = AuthErrorMapper.userFriendlyMessage(for: error)
@@ -48,7 +50,9 @@ final class LoginViewModel: ObservableObject {
   func validate() -> String? {
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
     
-    guard !trimmedEmail.isEmpty, !password.isEmpty else {
+    guard !trimmedEmail.isEmpty,
+          !password.isEmpty,
+          !confirmPassword.isEmpty else {
       return "Please fill in all fields."
     }
     
@@ -58,6 +62,10 @@ final class LoginViewModel: ObservableObject {
     
     guard password.count >= 6 else {
       return "Password must be at least 6 characters."
+    }
+    
+    guard password == confirmPassword else {
+      return "Passwords do not match."
     }
     
     return nil

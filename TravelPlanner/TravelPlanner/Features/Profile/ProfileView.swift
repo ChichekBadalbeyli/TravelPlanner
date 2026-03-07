@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseAuth
 import SwiftData
 
 struct ProfileView: View {
@@ -26,7 +25,7 @@ struct ProfileView: View {
     }
     
     private var tripsCount: String {
-        guard let uid = Auth.auth().currentUser?.uid else { return "0" }
+        guard let uid = appState.currentUserId else { return "0" }
         let userTrips = trips.filter { $0.userId == uid }
         return "\(userTrips.count)"
     }
@@ -78,6 +77,6 @@ struct ProfileView: View {
     }
     
     private var userEmail: String {
-        Auth.auth().currentUser?.email ?? "Unknown"
+        appState.currentUserEmail ?? "Unknown"
     }
 }

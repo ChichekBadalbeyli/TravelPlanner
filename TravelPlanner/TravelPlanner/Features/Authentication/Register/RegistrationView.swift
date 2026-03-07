@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RegistrationView: View {
 
-    @StateObject private var viewModel = RegisterViewModel()
+    @StateObject private var viewModel = RegistrationViewModel()
     @EnvironmentObject var appState: AppState
 
     var body: some View {
@@ -43,7 +43,7 @@ struct RegistrationView: View {
     }
     
     var registerText: some View {
-        VStack() {
+        VStack {
             AppTextField(
                 placeholder: "Email",
                 text: $viewModel.email
@@ -70,7 +70,7 @@ struct RegistrationView: View {
     }
     
     var errorMessage: some View {
-        VStack() {
+        VStack {
             if let error = viewModel.errorMessage {
                 Text(error)
                     .foregroundColor(.red)

@@ -19,7 +19,7 @@ struct LoginView: View {
                 headImage
                 AppCard {
                     VStack(spacing: 20) {
-                        logintTextField
+                        loginTextField
                         loginButton
                         registerButton
                         errorLabel
@@ -44,8 +44,8 @@ struct LoginView: View {
         }
     }
     
-    var logintTextField: some View {
-        VStack() {
+    var loginTextField: some View {
+        VStack {
             AppTextField(
                 placeholder: "Email",
                 text: $viewModel.email
@@ -77,9 +77,9 @@ struct LoginView: View {
     }
     
     var errorLabel: some View {
-        VStack() {
+        VStack {
             if let error = viewModel.errorMessage {
-                Text("Incorrect email or password")
+                Text(error)
                     .foregroundColor(.red)
                     .font(.footnote)
             }

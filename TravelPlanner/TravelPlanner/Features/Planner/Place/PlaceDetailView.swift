@@ -14,7 +14,6 @@ struct PlaceDetailView: View {
     let place: Place
     
     @StateObject private var viewModel = PlaceDetailViewModel()
-    @Environment(\.dismiss) private var dismiss
     @State private var region: MKCoordinateRegion
     
     init(place: Place) {
@@ -62,6 +61,12 @@ struct PlaceDetailView: View {
     
     var detailInfo: some View {
         VStack(spacing: 16) {
+            if let error = viewModel.errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .font(.footnote)
+            }
+            
             if let details = viewModel.details {
                 
                 if let address = details.formatted {
@@ -76,7 +81,7 @@ struct PlaceDetailView: View {
                     infoRow(icon: "phone.fill", text: phone)
                 }
                 
-                if let hours = details.opening_hours {
+                if let hours = details.openingHours {
                     infoRow(icon: "clock.fill", text: hours)
                 }
             }

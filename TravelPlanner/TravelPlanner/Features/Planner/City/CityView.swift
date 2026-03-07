@@ -36,7 +36,6 @@ struct CityView: View {
             }
         }
         .navigationTitle(city)
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.load(
                 city: city,
@@ -52,7 +51,7 @@ struct CityView: View {
                 dismiss()
             }
         } message: {
-            Text("The information could not be loaded. Please check city name and try again.")
+            Text(viewModel.errorMessage ?? "The information could not be loaded. Please check city name and try again.")
         }
         .navigationDestination(isPresented: $viewModel.navigateToPlan) {
             if let plan = viewModel.generatedPlan {
@@ -122,8 +121,6 @@ struct CityView: View {
     }
     
     func formatted(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter.string(from: date)
+        DateFormatters.medium.string(from: date)
     }
 }

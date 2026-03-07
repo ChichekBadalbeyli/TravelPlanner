@@ -20,5 +20,13 @@ struct PlaceDetails: Decodable {
     let formatted: String?
     let website: String?
     let phone: String?
-    let opening_hours: String?
+    let openingHours: String?
+
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case formatted
+        case website
+        case phone
+        case openingHours = "opening_hours"
+    }
 }
