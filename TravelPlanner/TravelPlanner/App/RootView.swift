@@ -12,6 +12,7 @@ struct RootView: View {
 
     @EnvironmentObject var appState: AppState
     @Environment(\.appDependencies) private var dependencies
+    @StateObject private var authCoordinator = AuthFlowCoordinator()
 
     var body: some View {
         if appState.isAuthenticated {
@@ -21,8 +22,13 @@ struct RootView: View {
                 LoginView(
                     viewModel: LoginViewModel(
                         loginUseCase: DefaultLoginUseCase(authService: dependencies.authService)
-                    ),
-                    registrationViewModel: RegistrationViewModel(
+                    )
+                )
+                .environmentObject(authCoordinator)
+            }
+            .navigationDestination(item: $authCoordinator.registrationDestination) { _ in
+                RegistrationView(
+                    viewModel: RegistrationViewModel(
                         registerUseCase: DefaultRegisterUseCase(authService: dependencies.authService)
                     )
                 )

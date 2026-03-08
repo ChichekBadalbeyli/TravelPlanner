@@ -10,6 +10,8 @@ import SwiftUI
 
 struct MainTabView: View {
 
+    @StateObject private var myTripsCoordinator = MyTripsCoordinator()
+
     var body: some View {
         TabView {
             NavigationStack {
@@ -21,6 +23,7 @@ struct MainTabView: View {
 
             NavigationStack {
                 MyTripsView()
+                    .environmentObject(myTripsCoordinator)
             }
             .tabItem {
                 Label(L10n.Tab.trips, systemImage: L10n.Icon.map)

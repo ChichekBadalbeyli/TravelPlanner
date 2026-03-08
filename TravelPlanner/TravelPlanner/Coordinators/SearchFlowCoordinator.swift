@@ -1,5 +1,5 @@
 //
-//  CreatePlanFlowCoordinator.swift
+//  SearchFlowCoordinator.swift
 //  TravelPlanner
 //
 //  Created by Chichak Badalbayli on 2/21/26.

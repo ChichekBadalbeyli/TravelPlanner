@@ -10,12 +10,11 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject private var viewModel: LoginViewModel
-    private let registrationViewModel: RegistrationViewModel
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject private var authCoordinator: AuthFlowCoordinator
 
-    init(viewModel: LoginViewModel, registrationViewModel: RegistrationViewModel) {
+    init(viewModel: LoginViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
-        self.registrationViewModel = registrationViewModel
     }
     
     var body: some View {
@@ -75,11 +74,9 @@ struct LoginView: View {
     }
     
     var registerButton: some View {
-        NavigationLink(
-            destination: RegistrationView(
-                viewModel: registrationViewModel
-            )
-        ) {
+        Button {
+            authCoordinator.registrationDestination = RegistrationDestination()
+        } label: {
             Text(L10n.Auth.noAccount)
                 .font(.footnote)
                 .foregroundColor(.gray)

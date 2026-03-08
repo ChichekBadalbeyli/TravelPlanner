@@ -13,11 +13,9 @@ struct MyTripsView: View {
     
     @Environment(\.modelContext) private var context
     @EnvironmentObject private var appState: AppState
+    @EnvironmentObject private var coordinator: MyTripsCoordinator
     @Query(sort: \TripEntity.startDate, order: .reverse)
     private var allTrips: [TripEntity]
-    @State private var showDeleteAlert = false
-    @State private var selectedTrip: TripEntity?
-    @State private var tripToDelete: TripEntity?
     
   var body: some View {
       Group {
@@ -28,10 +26,10 @@ struct MyTripsView: View {
           }
       }
       .navigationTitle(L10n.Trips.title)
-      .alert(isPresented: $showDeleteAlert) {
+      .alert(isPresented: $coordinator.showDeleteAlert) {
           deleteAlert()
       }
-      .sheet(item: $selectedTrip) { trip in
+      .sheet(item: $coordinator.selectedTrip) { trip in
           TripPlanView(
               isSavedTrip: true,
               city: trip.city,
@@ -74,12 +72,11 @@ struct MyTripsView: View {
             ForEach(trips) { trip in
                 tripRow(trip)
                     .onTapGesture {
-                        selectedTrip = trip
+                        coordinator.showTrip(trip)
                     }
                     .swipeActions {
                         Button(role: .destructive) {
-                            tripToDelete = trip
-                            showDeleteAlert = true
+                            coordinator.askDelete(trip)
                         } label: {
                             Label(L10n.Trips.delete, systemImage: L10n.Icon.trash)
                         }
@@ -104,10 +101,10 @@ struct MyTripsView: View {
             title: Text(L10n.Trips.deleteTitle),
             message: Text(L10n.Trips.deleteMessage),
             primaryButton: .destructive(Text(L10n.Trips.delete)) {
-                if let trip = tripToDelete {
+                if let trip = coordinator.tripToDelete {
                     context.delete(trip)
                     try? context.save()
-                    tripToDelete = nil
+                    coordinator.clearDelete()
                 }
             },
             secondaryButton: .cancel(Text(L10n.Common.cancel))
