@@ -74,7 +74,7 @@ struct MyTripsView: View {
                     .onTapGesture {
                         coordinator.showTrip(trip)
                     }
-                    .swipeActions {
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button(role: .destructive) {
                             coordinator.askDelete(trip)
                         } label: {
