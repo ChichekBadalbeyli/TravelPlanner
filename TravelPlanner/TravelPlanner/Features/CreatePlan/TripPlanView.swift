@@ -12,10 +12,10 @@ import SwiftData
 struct TripPlanView: View {
   
   @Environment(\.modelContext) private var context
-  @Environment(\.dismiss) private var dismiss
   @EnvironmentObject private var appState: AppState
   @Environment(\.appDependencies) private var dependencies
   @State private var saveErrorMessage: String?
+    
   let isSavedTrip: Bool
   let city: String
   let startDate: Date
@@ -76,7 +76,7 @@ struct TripPlanView: View {
       let repository = dependencies.makeTripsRepository(context)
       let useCase = DefaultSaveTripUseCase(repository: repository)
       try useCase.execute(city: city, startDate: startDate, endDate: endDate, userId: uid, plan: plan)
-      dismiss()
+        appState.selectedTab = 1
     } catch {
       saveErrorMessage = L10n.Plan.saveError
     }

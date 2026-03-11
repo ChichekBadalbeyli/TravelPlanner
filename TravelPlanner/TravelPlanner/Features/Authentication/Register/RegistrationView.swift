@@ -11,6 +11,8 @@ struct RegistrationView: View {
 
     @StateObject private var viewModel: RegistrationViewModel
     @EnvironmentObject var appState: AppState
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var authCoordinator: AuthFlowCoordinator
 
     init(viewModel: RegistrationViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -66,7 +68,11 @@ struct RegistrationView: View {
     var registerButton: some View {
         AppPrimaryButton(title: L10n.Auth.register) {
             Task {
-                await viewModel.register(appState: appState)
+                let success = await viewModel.register()
+                if success {
+                    authCoordinator.registrationDestination = nil
+                    dismiss()
+                }
             }
         }
         .disabled(!viewModel.isFormValid)
