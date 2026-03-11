@@ -1,0 +1,20 @@
+# Xcode
+DerivedData/
+build/
+*.xccheckout
+*.xcscmblueprint
+
+# User data
+xcuserdata/
+*.xcuserdatad/
+*.xcuserstate
+*.xcbkptlist
+
+# macOS
+.DS_Store
+
+# Firebase
+GoogleService-Info.plist
+
+# Local secrets (optional)
+Secrets.xcconfig
