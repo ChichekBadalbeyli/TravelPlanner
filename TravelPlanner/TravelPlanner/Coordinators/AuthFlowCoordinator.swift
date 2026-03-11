@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+
 @MainActor
 final class AuthFlowCoordinator: ObservableObject {
     @Published var registrationDestination: RegistrationDestination?

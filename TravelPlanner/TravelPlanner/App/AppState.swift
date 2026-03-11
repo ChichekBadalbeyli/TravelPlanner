@@ -15,6 +15,7 @@ import FirebaseCore
 final class AppState: ObservableObject {
     @Published var isAuthenticated: Bool = false
     @Published var isFirebaseConfigured: Bool
+    @Published var selectedTab: Int = 0
     
     private let authService: AuthServicing
     

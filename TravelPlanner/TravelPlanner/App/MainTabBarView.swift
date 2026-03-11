@@ -11,15 +11,17 @@ import SwiftUI
 struct MainTabView: View {
 
     @StateObject private var myTripsCoordinator = MyTripsCoordinator()
+    @EnvironmentObject var appState: AppState
 
     var body: some View {
-        TabView {
+        TabView(selection: $appState.selectedTab) {
             NavigationStack {
                     SearchView()
             }
             .tabItem {
                 Label(L10n.Tab.create, systemImage: L10n.Icon.plusCircle)
             }
+            .tag(0)
 
             NavigationStack {
                 MyTripsView()
@@ -28,6 +30,7 @@ struct MainTabView: View {
             .tabItem {
                 Label(L10n.Tab.trips, systemImage: L10n.Icon.map)
             }
+            .tag(1)
 
             NavigationStack {
                 ProfileView()
@@ -35,6 +38,7 @@ struct MainTabView: View {
             .tabItem {
                 Label(L10n.Tab.profile, systemImage: L10n.Icon.person)
             }
+            .tag(2)
         }
     }
 }

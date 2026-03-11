@@ -42,10 +42,15 @@ final class CityViewModel: ObservableObject {
     // MARK: - Load
     
     func load(city: String, startDate: Date, endDate: Date) {
+        let calendar = Calendar.current
+        let maxWeatherEnd = calendar.date(byAdding: .day, value: 14, to: startDate) ?? endDate
+        let weatherEndDate = min(endDate, maxWeatherEnd)
         Task {
-            await fetchAll(city: city,
-                           startDate: startDate,
-                           endDate: endDate)
+            await fetchAll(
+                city: city,
+                startDate: startDate,
+                endDate: weatherEndDate
+            )
         }
     }
     
@@ -90,7 +95,4 @@ final class CityViewModel: ObservableObject {
             endDate: endDate
         )
     }
-    
-    // MARK: - Helpers
-    
 }

@@ -12,7 +12,7 @@ struct LoginView: View {
     @StateObject private var viewModel: LoginViewModel
     @EnvironmentObject var appState: AppState
     @EnvironmentObject private var authCoordinator: AuthFlowCoordinator
-
+    
     init(viewModel: LoginViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -33,6 +33,15 @@ struct LoginView: View {
                 .padding(.horizontal)
             }
         }
+//        .navigationDestination(item: $authCoordinator.registrationDestination) { _ in
+//            RegistrationView(
+//                viewModel: RegistrationViewModel(
+//                    registerUseCase: DefaultRegisterUseCase(
+//                        authService: AuthService()
+//                    )
+//                )
+//            )
+//        }
     }
     
     var headImage: some View {
