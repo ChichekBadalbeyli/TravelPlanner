@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		341967262F4A0B8200DA2ED1 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 341967252F4A0B8200DA2ED1 /* FirebaseAuth */; };
 		34CEC21E2F5C403C00B7E0FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34CEC21D2F5C403C00B7E0FA /* GoogleService-Info.plist */; };
-		34EA54732F5ABA29004DAD10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 34EA54722F5ABA22004DAD10 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		341967002F49E5D600DA2ED1 /* TravelPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TravelPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34CEC21D2F5C403C00B7E0FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		34EA54722F5ABA22004DAD10 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		34EA550E2F5B3800004DAD10 /* TravelPlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelPlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -89,7 +87,6 @@
 				341967002F49E5D600DA2ED1 /* TravelPlanner.app */,
 				34EA550E2F5B3800004DAD10 /* TravelPlannerTests.xctest */,
 				34CEC21D2F5C403C00B7E0FA /* GoogleService-Info.plist */,
-				34EA54722F5ABA22004DAD10 /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -184,7 +181,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				34EA54732F5ABA29004DAD10 /* README.md in Resources */,
 				34CEC21E2F5C403C00B7E0FA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
