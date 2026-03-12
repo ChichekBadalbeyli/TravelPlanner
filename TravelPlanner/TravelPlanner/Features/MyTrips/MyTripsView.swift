@@ -25,7 +25,7 @@ struct MyTripsView: View {
               tripsList
           }
       }
-      .navigationTitle(L10n.Trips.title)
+      .navigationTitle(Localization.Trips.title)
       .alert(isPresented: $coordinator.showDeleteAlert) {
           deleteAlert()
       }
@@ -48,14 +48,14 @@ struct MyTripsView: View {
     
     private var emptyState: some View {
         VStack(spacing: 16) {
-            Image(systemName: L10n.Icon.airplane)
+            Image(systemName: Localization.Icon.airplane)
                 .font(.system(size: 50))
                 .foregroundColor(.gray)
             
-            Text(L10n.Trips.emptyTitle)
+            Text(Localization.Trips.emptyTitle)
                 .font(.headline)
             
-            Text(L10n.Trips.emptySubtitle)
+            Text(Localization.Trips.emptySubtitle)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
@@ -78,7 +78,7 @@ struct MyTripsView: View {
                         Button(role: .destructive) {
                             coordinator.askDelete(trip)
                         } label: {
-                            Label(L10n.Trips.delete, systemImage: L10n.Icon.trash)
+                            Label(Localization.Trips.delete, systemImage: Localization.Icon.trash)
                         }
                     }
             }
@@ -98,23 +98,23 @@ struct MyTripsView: View {
     
     private func deleteAlert() -> Alert {
         Alert(
-            title: Text(L10n.Trips.deleteTitle),
-            message: Text(L10n.Trips.deleteMessage),
-            primaryButton: .destructive(Text(L10n.Trips.delete)) {
+            title: Text(Localization.Trips.deleteTitle),
+            message: Text(Localization.Trips.deleteMessage),
+            primaryButton: .destructive(Text(Localization.Trips.delete)) {
                 if let trip = coordinator.tripToDelete {
                     context.delete(trip)
                     try? context.save()
                     coordinator.clearDelete()
                 }
             },
-            secondaryButton: .cancel(Text(L10n.Common.cancel))
+            secondaryButton: .cancel(Text(Localization.Common.cancel))
         )
     }
     
     private func dateRange(_ trip: TripEntity) -> String {
         let start = DateFormatters.medium.string(from: trip.startDate)
         let end = DateFormatters.medium.string(from: trip.endDate)
-        return String(format: L10n.City.dateRangeFormat, start, end)
+        return String(format: Localization.City.dateRangeFormat, start, end)
     }
 }
 

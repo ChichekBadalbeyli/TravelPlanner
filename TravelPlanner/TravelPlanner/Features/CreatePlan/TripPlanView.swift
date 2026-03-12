@@ -31,7 +31,7 @@ struct TripPlanView: View {
             Text(formatted(day.date))
               .font(.headline)
             ForEach(day.places) { place in
-              Text(String(format: L10n.Plan.placeFormat, place.name))
+              Text(String(format: Localization.Plan.placeFormat, place.name))
                 .padding(.leading)
             }
           }
@@ -42,7 +42,7 @@ struct TripPlanView: View {
           .shadow(radius: 3)
         }
         if !isSavedTrip {
-          AppPrimaryButton(title: L10n.Plan.saveTrip) {
+          AppPrimaryButton(title: Localization.Plan.saveTrip) {
             saveTrip()
           }
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -50,15 +50,15 @@ struct TripPlanView: View {
       }
       .padding()
     }
-    .navigationTitle(L10n.Plan.title)
+    .navigationTitle(Localization.Plan.title)
     .alert(
-      L10n.Common.ok,
+        Localization.Common.ok,
       isPresented: Binding(
         get: { saveErrorMessage != nil },
         set: { if !$0 { saveErrorMessage = nil } }
       )
     ) {
-      Button(L10n.Common.ok, role: .cancel) {
+      Button(Localization.Common.ok, role: .cancel) {
         saveErrorMessage = nil
       }
     } message: {
@@ -78,7 +78,7 @@ struct TripPlanView: View {
       try useCase.execute(city: city, startDate: startDate, endDate: endDate, userId: uid, plan: plan)
         appState.selectedTab = 1
     } catch {
-      saveErrorMessage = L10n.Plan.saveError
+      saveErrorMessage = Localization.Plan.saveError
     }
   }
 }

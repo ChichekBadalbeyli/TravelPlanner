@@ -12,6 +12,7 @@ struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @StateObject private var coordinator = SearchFlowCoordinator()
     @Environment(\.appDependencies) private var dependencies
+    @EnvironmentObject var appState: AppState
 
     var body: some View {
         ZStack {
@@ -19,12 +20,12 @@ struct SearchView: View {
             VStack {
                 AppCard {
                     VStack(spacing: 30) {
-                        Text(L10n.CreatePlan.title)
+                        Text(Localization.CreatePlan.title)
                             .font(.largeTitle.bold())
                             .foregroundColor(.black)
                         VStack(spacing: 20) {
                             AppSearchField(
-                                placeholder: L10n.CreatePlan.searchCity,
+                                placeholder: Localization.CreatePlan.searchCity,
                                 text: $viewModel.city
                             )
                             AppDateRow(
@@ -32,7 +33,7 @@ struct SearchView: View {
                             ) {
                                 viewModel.isDatePickerPresented = true
                             }
-                            AppPrimaryButton(title: L10n.CreatePlan.continueButton) {
+                            AppPrimaryButton(title: Localization.CreatePlan.continueButton) {
                                 coordinator.citySelection = CitySelection(
                                     city: viewModel.city,
                                     startDate: viewModel.startDate,
@@ -65,26 +66,35 @@ struct SearchView: View {
             )
             .environmentObject(coordinator)
         }
+        .onChange(of: appState.selectedTab) {
+            if appState.selectedTab == 0 {
+                coordinator.planDestination = nil
+                coordinator.citySelection = nil
+                viewModel.city = ""
+                viewModel.startDate = Date()
+                viewModel.endDate = Date()
+            }
+        }
     }
     
     private var dateRangeText: String {
         let start = DateFormatters.medium.string(from: viewModel.startDate)
         let end = DateFormatters.medium.string(from: viewModel.endDate)
-        return String(format: L10n.City.dateRangeFormat, start, end)
+        return String(format: Localization.City.dateRangeFormat, start, end)
     }
 
     private var datePickerSheet: some View {
         VStack(spacing: 20) {
-            DatePicker(L10n.DatePicker.startDate,
+            DatePicker(Localization.DatePicker.startDate,
                        selection: $viewModel.startDate,
                        displayedComponents: .date)
 
-            DatePicker(L10n.DatePicker.endDate,
+            DatePicker(Localization.DatePicker.endDate,
                        selection: $viewModel.endDate,
                        in: viewModel.startDate...,
                        displayedComponents: .date)
 
-            AppPrimaryButton(title: L10n.CreatePlan.saveDates) {
+            AppPrimaryButton(title: Localization.CreatePlan.saveDates) {
                 viewModel.isDatePickerPresented = false
             }
         }

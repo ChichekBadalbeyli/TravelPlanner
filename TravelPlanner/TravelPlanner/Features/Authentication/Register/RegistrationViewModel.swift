@@ -53,19 +53,19 @@ final class RegistrationViewModel: ObservableObject {
         guard !trimmedEmail.isEmpty,
               !password.isEmpty,
               !confirmPassword.isEmpty else {
-            return L10n.Validation.fillAll
+            return Localization.Validation.fillAll
         }
         
         guard trimmedEmail.isValidEmail else {
-            return L10n.Validation.invalidEmail
+            return Localization.Validation.invalidEmail
         }
         
         guard password.count >= 6 else {
-            return L10n.Validation.passwordLength
+            return Localization.Validation.passwordLength
         }
         
         guard password == confirmPassword else {
-            return L10n.Validation.passwordsMismatch
+            return Localization.Validation.passwordsMismatch
         }
         
         return nil

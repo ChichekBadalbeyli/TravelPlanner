@@ -71,19 +71,19 @@ struct PlaceDetailView: View {
             if let details = viewModel.details {
                 
                 if let address = details.formatted {
-                    infoRow(icon: L10n.Icon.mappinEllipse, text: address)
+                    infoRow(icon: Localization.Icon.mappinEllipse, text: address)
                 }
                 
                 if let website = details.website {
-                    infoRow(icon: L10n.Icon.globe, text: website)
+                    infoRow(icon: Localization.Icon.globe, text: website)
                 }
                 
                 if let phone = details.phone {
-                    infoRow(icon: L10n.Icon.phoneFill, text: phone)
+                    infoRow(icon: Localization.Icon.phoneFill, text: phone)
                 }
                 
                 if let hours = details.openingHours {
-                    infoRow(icon: L10n.Icon.clockFill, text: hours)
+                    infoRow(icon: Localization.Icon.clockFill, text: hours)
                 }
             }
         }

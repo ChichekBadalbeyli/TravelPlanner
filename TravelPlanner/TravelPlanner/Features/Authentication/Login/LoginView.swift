@@ -33,25 +33,16 @@ struct LoginView: View {
                 .padding(.horizontal)
             }
         }
-//        .navigationDestination(item: $authCoordinator.registrationDestination) { _ in
-//            RegistrationView(
-//                viewModel: RegistrationViewModel(
-//                    registerUseCase: DefaultRegisterUseCase(
-//                        authService: AuthService()
-//                    )
-//                )
-//            )
-//        }
     }
     
     var headImage: some View {
         VStack(spacing: 40) {
             VStack(spacing: 12) {
-                Image(systemName: L10n.Icon.airplane)
+                Image(systemName: Localization.Icon.airplane)
                     .font(.system(size: 50))
                     .foregroundColor(.black)
                 
-                Text(L10n.App.name)
+                Text(Localization.App.name)
                     .font(.largeTitle.bold())
                     .foregroundColor(.black)
             }
@@ -61,19 +52,19 @@ struct LoginView: View {
     var loginTextField: some View {
         VStack {
             AppTextField(
-                placeholder: L10n.Auth.email,
+                placeholder: Localization.Auth.email,
                 text: $viewModel.email
             )
             
             AppSecureField(
-                placeholder: L10n.Auth.password,
+                placeholder: Localization.Auth.password,
                 text: $viewModel.password
             )
         }
     }
     
     var loginButton: some View {
-        AppPrimaryButton(title: L10n.Auth.login) {
+        AppPrimaryButton(title: Localization.Auth.login) {
             Task {
                 await viewModel.login(appState: appState)
             }
@@ -86,7 +77,7 @@ struct LoginView: View {
         Button {
             authCoordinator.registrationDestination = RegistrationDestination()
         } label: {
-            Text(L10n.Auth.noAccount)
+            Text(Localization.Auth.noAccount)
                 .font(.footnote)
                 .foregroundColor(.gray)
         }

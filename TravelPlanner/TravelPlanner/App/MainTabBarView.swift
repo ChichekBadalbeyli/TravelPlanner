@@ -19,7 +19,7 @@ struct MainTabView: View {
                     SearchView()
             }
             .tabItem {
-                Label(L10n.Tab.create, systemImage: L10n.Icon.plusCircle)
+                Label(Localization.Tab.create, systemImage: Localization.Icon.plusCircle)
             }
             .tag(0)
 
@@ -28,7 +28,7 @@ struct MainTabView: View {
                     .environmentObject(myTripsCoordinator)
             }
             .tabItem {
-                Label(L10n.Tab.trips, systemImage: L10n.Icon.map)
+                Label(Localization.Tab.trips, systemImage: Localization.Icon.map)
             }
             .tag(1)
 
@@ -36,7 +36,7 @@ struct MainTabView: View {
                 ProfileView()
             }
             .tabItem {
-                Label(L10n.Tab.profile, systemImage: L10n.Icon.person)
+                Label(Localization.Tab.profile, systemImage: Localization.Icon.person)
             }
             .tag(2)
         }

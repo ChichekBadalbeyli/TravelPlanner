@@ -15,7 +15,7 @@ enum AuthErrorMapper {
       if let authError = error as? AuthServiceError {
           switch authError {
           case .firebaseNotConfigured:
-              return L10n.Validation.firebaseNotConfigured
+              return Localization.Validation.firebaseNotConfigured
           }
       }
 
@@ -23,32 +23,32 @@ enum AuthErrorMapper {
 
         let name = underlying.userInfo["FIRAuthErrorNameKey"] as? String
         if name == "ERROR_INVALID_EMAIL" {
-            return L10n.Validation.invalidEmail
+            return Localization.Validation.invalidEmail
         }
         if underlying.domain == "FIRAuthErrorDomain", underlying.code == 17008 {
-            return L10n.Validation.invalidEmail
+            return Localization.Validation.invalidEmail
         }
 
         if name == "ERROR_EMAIL_ALREADY_IN_USE" {
-            return L10n.Validation.emailAlreadyInUse
+            return Localization.Validation.emailAlreadyInUse
         }
         if name == "ERROR_WEAK_PASSWORD" {
-            return L10n.Validation.passwordLength
+            return Localization.Validation.passwordLength
         }
         if underlying.domain == "FIRAuthErrorDomain" {
             switch underlying.code {
             case 17007:
-                return L10n.Validation.emailAlreadyInUse
+                return Localization.Validation.emailAlreadyInUse
             case 17026:
-                return L10n.Validation.passwordLength
+                return Localization.Validation.passwordLength
             case 17005:
-                return L10n.Validation.accountDisabled
+                return Localization.Validation.accountDisabled
             case 17010:
-                return L10n.Validation.tooManyAttempts
+                return Localization.Validation.tooManyAttempts
             default:
                 break
             }
         }
-        return L10n.Validation.invalidCredentials
+        return Localization.Validation.invalidCredentials
     }
 }

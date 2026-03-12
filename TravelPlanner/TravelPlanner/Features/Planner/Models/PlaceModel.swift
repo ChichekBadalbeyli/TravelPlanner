@@ -45,7 +45,7 @@ struct Place: Identifiable, Codable, Equatable, Hashable {
         )
         
         id = try properties.decode(String.self, forKey: .place_id)
-        name = try properties.decodeIfPresent(String.self, forKey: .name) ?? L10n.Profile.unknownUser
+        name = try properties.decodeIfPresent(String.self, forKey: .name) ?? Localization.Profile.unknownUser
         lat = try properties.decode(Double.self, forKey: .lat)
         lon = try properties.decode(Double.self, forKey: .lon)
         rating = try? properties.decode(Double.self, forKey: .rating)

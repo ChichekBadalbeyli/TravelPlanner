@@ -3,7 +3,7 @@
 
 import Foundation
 
-enum L10n {
+enum Localization {
 
     enum App {
         static let name = NSLocalizedString("app.name", comment: "")

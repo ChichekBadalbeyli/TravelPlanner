@@ -36,7 +36,7 @@ final class PlaceDetailViewModel: ObservableObject {
             if let localized = (error as? LocalizedError)?.errorDescription {
                 errorMessage = localized
             } else {
-                errorMessage = L10n.PlaceDetails.loadError
+                errorMessage = Localization.PlaceDetails.loadError
             }
         }
     }

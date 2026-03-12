@@ -72,7 +72,7 @@ final class CityViewModel: ObservableObject {
             if let localized = (error as? LocalizedError)?.errorDescription {
                 errorMessage = localized
             } else {
-                errorMessage = L10n.City.loadError
+                errorMessage = Localization.City.loadError
             }
         }
     }

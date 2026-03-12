@@ -37,7 +37,7 @@ struct CityView: View {
                 .ignoresSafeArea()
             ScrollView {
                 VStack(spacing: 24) {
-                    Text(String(format: L10n.City.dateRangeFormat, formatted(startDate), formatted(endDate)))
+                    Text(String(format: Localization.City.dateRangeFormat, formatted(startDate), formatted(endDate)))
                         .foregroundColor(.gray)
                     weatherSection
                     attractionsSection
@@ -69,11 +69,11 @@ struct CityView: View {
            )
         }
         .alert("", isPresented: $viewModel.showError) {
-            Button(L10n.Common.ok, role: .cancel) {
+            Button(Localization.Common.ok, role: .cancel) {
                 dismiss()
             }
         } message: {
-            Text(viewModel.errorMessage ?? L10n.City.loadError)
+            Text(viewModel.errorMessage ?? Localization.City.loadError)
         }
         .navigationDestination(item: $coordinator.planDestination) { destination in
             TripPlanView(
@@ -88,7 +88,7 @@ struct CityView: View {
     
     var weatherSection: some View {
         VStack(alignment: .leading) {
-            Text(L10n.City.weather)
+            Text(Localization.City.weather)
                 .font(.headline)
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -102,7 +102,7 @@ struct CityView: View {
     
     var attractionsSection: some View {
         VStack(alignment: .leading) {
-            Text(L10n.City.topAttractions)
+            Text(Localization.City.topAttractions)
                 .font(.headline)
             
             ForEach(viewModel.places) { place in
@@ -135,7 +135,7 @@ struct CityView: View {
                 )
             }
         } label: {
-            Text(L10n.CreatePlan.createPlanButton)
+            Text(Localization.CreatePlan.createPlanButton)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(viewModel.hasSelectedPlaces ? Color.blue : Color.gray)

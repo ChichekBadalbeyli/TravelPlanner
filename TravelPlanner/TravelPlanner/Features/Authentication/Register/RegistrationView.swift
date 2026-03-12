@@ -38,10 +38,10 @@ struct RegistrationView: View {
     var headImage: some View {
         VStack(spacing: 40) {
             VStack(spacing: 12) {
-                Image(systemName: L10n.Icon.globe)
+                Image(systemName: Localization.Icon.globe)
                     .font(.system(size: 50))
                     .foregroundColor(.black)
-                Text(L10n.Auth.createAccount)
+                Text(Localization.Auth.createAccount)
                     .font(.largeTitle.bold())
                     .foregroundColor(.black)
             }
@@ -51,22 +51,22 @@ struct RegistrationView: View {
     var registerText: some View {
         VStack {
             AppTextField(
-                placeholder: L10n.Auth.email,
+                placeholder: Localization.Auth.email,
                 text: $viewModel.email
             )
             AppSecureField(
-                placeholder: L10n.Auth.password,
+                placeholder: Localization.Auth.password,
                 text: $viewModel.password
             )
             AppSecureField(
-                placeholder: L10n.Auth.confirmPassword,
+                placeholder: Localization.Auth.confirmPassword,
                 text: $viewModel.confirmPassword
             )
         }
     }
     
     var registerButton: some View {
-        AppPrimaryButton(title: L10n.Auth.register) {
+        AppPrimaryButton(title: Localization.Auth.register) {
             Task {
                 let success = await viewModel.register()
                 if success {

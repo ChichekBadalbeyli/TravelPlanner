@@ -49,15 +49,15 @@ final class LoginViewModel: ObservableObject {
     let trimmedEmail = email.trimmingCharacters(in: .whitespacesAndNewlines)
     
         guard !trimmedEmail.isEmpty, !password.isEmpty else {
-            return L10n.Validation.fillAll
+            return Localization.Validation.fillAll
         }
         
         guard trimmedEmail.isValidEmail else {
-            return L10n.Validation.invalidEmail
+            return Localization.Validation.invalidEmail
         }
         
         guard password.count >= 6 else {
-            return L10n.Validation.passwordLength
+            return Localization.Validation.passwordLength
         }
     
     return nil
